@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>LobbyPi Time</title>
+  <style>
+    body {
+      background-image: url('thsstudents.png');
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-family: 'Anton', serif;
+      font-weight: 600;
+      font-size: 100px;
+      color: #f7bf14;
+      margin-top: 50px;
+    }
+
+    #clock {
+      font-family: 'REM', sans-serif;
+      font-size: 300px;
+      text-align: center;
+      color: #800020;
+      margin-top: 50px;
+    }
+
+    #schedule {
+      font-family: 'Lilita One', sans-serif;
+      font-size: 100px;
+      text-align: center;
+      color: white;
+      margin-top: 95px;
+    }
+  </style>
+  <link rel="shortcut icon" href="lobbypi.png" />
+  <link rel="manifest" href="tmanifest.json">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Karla:wght@900&family=Lilita+One&family=REM:wght@550&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <img src="thslogo.png" alt="THS Logo"
+    style="position: absolute; top: 55px; right: 30px; width: 200px; height: 200px;">
+  <center>
+    <h1>Welcome to The Hudson School!</h1>
+  </center>
+  <div id="clock"></div>
+  <div id="schedule">
+    <p id="day-period"></p>
+  </div>
