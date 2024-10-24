@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html>
+
+
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <title>LobbyPi Room Schedule</title>
+
+  <style>
+
+    /* Your CSS styles here */
+
+  </style>
+
+  <link rel="shortcut icon" href="lobbypibythssysnet.png" />
+
+  <link rel="manifest" href="tmanifest.json">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+
+  <link
+
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Karla:wght@900&family=Lilita+One&family=REM:wght@550&display=swap"
+
+    rel="stylesheet">
+
+</head>
+
+
+
+<body>
+
+  <img src="thslogoBW.png" alt="THS Logo"
+
+    style="position: absolute; top: 55px; right: 30px; width: 200px; height: 200px;">
+
+  <center>
+
+    <h1>Empty Rooms</h1>
+
+  </center>
+
+  <div id="clock"></div>
+
+  <div id="rooms">
+
+    <!-- Room availability will be displayed here -->
+
+  </div>
+
+
+
+  <script>
+
+    const scheduleData = {
+
+      Monday: {
+
+        "Period 1": ["Theater", "208", "302", "305", "403", "404"],
+
+        "Period 2": ["Theater", "204", "208", "304", "305", "402", "403", "404"],
+
+        "Period 3": ["Theater", "208", "305", "403", "404"],
+
+        "Period 4": ["Theater", "208", "403", "404"],
+
+        "Period 5": ["Theater", "204", "206", "208", "302", "402", "403", "404"],
+
+        "Period 6": ["204", "208", "304", "305", "402", "403", "404"],
+
+        "Period 7": ["Theater", "204", "206", "208", "302", "304", "403", "404"],
+
+        "Period 8": ["Theater", "208", "302", "304", "305", "403", "404"],
+
+        "Period 9": ["Theater", "201", "202", "208", "403", "404"]
+
+      },
+
+      Tuesday: {
+
+        "Period 1": ["Theater", "208", "305", "403", "404"],
+
+        "Period 2": ["Theater", "204", "208", "304", "403", "404"],
+
+        "Period 3": ["202", "204", "403", "404"],
+
+        "Period 4": ["201", "202", "204", "206", "208", "301", "402", "403", "404"],
+
+        "Period 5": ["Theater", "202", "204", "301", "304"],
+
+        "Period 6": ["202", "204", "208", "302"],
+
+        "Period 7": ["204", "206"],
+
+        "Period 8": ["208", "305"],
+
+        "Period 9": ["202", "208", "304", "402", "403", "404"]
+
+      },
+
+      Wednesday: {
+
+        "Period 1": ["Theater", "208", "301", "305", "402", "403", "404"],
+
+        "Period 2": ["Theater", "204", "208", "304", "305", "402", "403", "404"],
+
+        "Period 3": ["208"],
+
+        "Period 4": ["Theater", "403", "404"],
+
+        "Period 5": ["204", "208", "403", "404"],
+
+        "Period 6": ["Theater", "204", "305"],
+
+        "Period 7": ["Theater", "204", "206", "208", "302", "304", "305"],
+
+        "Period 8": ["Theater", "208", "302", "304", "403", "404"],
+
+        "Period 9": ["201", "202", "208", "304", "403", "404"]
+
+      },
+
+      Thursday: {
+
+        "Period 1": ["Theater", "208", "305", "403", "404"],
+
+        "Period 2": ["Theater", "204", "208", "304", "403", "404"],
+
+        "Period 3": ["Theater", "208", "302", "403", "404"],
+
+        "Period 4": ["Theater", "208", "403", "404"],
+
+        "Period 5": ["Theater", "204", "208", "403", "404"],
+
+        "Period 6": ["Theater", "204", "208", "402", "403", "404"],
+
+        "Period 7": ["Theater", "204", "206", "208", "403", "404"],
+
+        "Period 8": ["Theater", "208", "302", "402", "403", "404"],
+
+        "Period 9": ["Theater", "201", "208", "304", "402", "403", "404"]
+
+      },
+
+      Friday: {
+
+        "Period 1": ["204", "206", "208", "301", "302", "304", "305", "403", "404"],
+
+        "Period 2": ["204", "208", "301", "304", "402", "403", "404"],
+
+        "Period 3": ["201", "208", "301", "302", "402", "403", "404"],
+
+        "Period 4": ["208", "301", "403", "404"],
+
+        "Period 5": ["201", "204", "301", "403", "404"],
+
+        "Period 6": ["Theater", "202", "204", "301", "403", "404"],
+
+        "Period 7": ["Theater", "204", "206", "302", "304", "305", "402", "403", "404"],
+
+        "Period 8": ["204", "206", "304", "403", "404"],
+
+        "Period 9": ["201", "202", "204", "206", "208", "304", "402", "403", "404"]
+
+      }
+
+    };
+
+
+
+    function findCurrentPeriod(currentTime) {
+
+      // Your code for determining the current period goes here
+
+    }
+
+
+
+    function updateAvailableRooms() {
+
+      const now = new Date();
+
+      const currentDay = now.toLocaleString('en-US', { weekday: 'long' });
+
+      const currentTime = now.getHours() * 60 + now.getMinutes();
+
+
+
+      const currentPeriod = findCurrentPeriod(currentTime);
+
+      const availableRooms = scheduleData[currentDay][currentPeriod];
+
+
+
+      const roomsElement = document.getElementById('rooms');
+
+      roomsElement.innerHTML = `Available Rooms for ${currentPeriod}: ${availableRooms.join(', ')}`;
+
+    }
+
+
+
+    // Call the updateAvailableRooms function to update the UI
+
+    updateAvailableRooms();
+
+
+
+    // Schedule updates every minute (adjust as needed)
+
+    setInterval(updateAvailableRooms, 60000);
+
+  </script>
+
+</body>
+
+
+
+</html>

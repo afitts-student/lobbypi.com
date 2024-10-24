@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hoboken Weather - Hourly</title>
+    <style>
+        /* Modern font styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Material+Icons');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #B2B7BE;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .current-weather h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .current-weather .temp {
+            font-size: 56px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .hourly-weather {
+            margin-top: 20px;
+        }
+
+        .hourly-cards {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px 0;
+        }
+
+        .hourly-card {
+            flex: 1;
+            margin: 10px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #888;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .hourly-card h4 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .hourly-card p {
+            margin: 5px 0;
+        }
+
+        .weather-icon {
+            font-family: 'Material Icons';
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Current Weather Section -->
+        <section class="current-weather">
+            <h2 id="city-name">Hoboken, NJ</h2>
+            <div class="temp" id="temperature">--°F</div>
+            <p id="weather-conditions">Conditions: --</p>
+        </section>
+
+        <!-- Hourly Weather Section -->
+        <section class="hourly-weather">
+            <div class="hourly-cards">
+                <div class="hourly-card">
+                    <h4 id="time1">Time</h4>
+                    <span class="weather-icon" id="icon1">☀</span>
+                    <p id="temp1">--°F</p>
+                    <p id="desc1">--</p>
+                </div>
+                <div class="hourly-card">
+                    <h4 id="time2">Time</h4>
+                    <span class="weather-icon" id="icon2">☁</span>
+                    <p id="temp2">--°F</p>
+                    <p id="desc2">--</p>
+                </div>
+                <div class="hourly-card">
+                    <h4 id="time3">Time</h4>
+                    <span class="weather-icon" id="icon3">🌧</span>
+                    <p id="temp3">--°F</p>
+                    <p id="desc3">--</p>
+                </div>
+                <div class="hourly-card">
+                    <h4 id="time4">Time</h4>
+                    <span class="weather-icon" id="icon4">❄</span>
+                    <p id="temp4">--°F</p>
+                    <p id="desc4">--</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const apiKey = '9f39a7dd8299cd146e3e2fc7d91850cb';
+        const cityId = '5099133'; 
+        const units = 'imperial';
+
+        function fetchWeather() {
+            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${apiKey}&units=${units}`;
+
+            fetch(weatherUrl)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperature').innerHTML = `${Math.round(data.main.temp)}°F`;
+                    document.getElementById('weather-conditions').innerHTML = `Conditions: ${data.weather[0].description}`;
+                })
+                .catch(error => console.log('Error fetching current weather data:', error));
+        }
+
+        function fetchHourlyForecast() {
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${apiKey}&units=${units}`;
+
+            fetch(forecastUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const hourlyData = [0, 1, 2, 3];
+                    hourlyData.forEach((hour, index) => {
+                        const time = new Date(data.list[hour].dt_txt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        document.getElementById(`time${index + 1}`).innerHTML = time;
+                        document.getElementById(`temp${index + 1}`).innerHTML = `${Math.round(data.list[hour].main.temp)}°F`;
+                        document.getElementById(`desc${index + 1}`).innerHTML = data.list[hour].weather[0].description;
+
+                        const weatherCode = data.list[hour].weather[0].icon;
+                        const iconElement = document.getElementById(`icon${index + 1}`);
+                        setWeatherIcon(weatherCode, iconElement);
+                    });
+                })
+                .catch(error => console.log('Error fetching hourly forecast:', error));
+        }
+
+        function setWeatherIcon(code, element) {
+            const icons = {
+                "01d": "☀", 
+                "01n": "🌙", 
+                "02d": "⛅", 
+                "02n": "🌙", 
+                "03d": "☁", 
+                "03n": "☁", 
+                "04d": "☁", 
+                "04n": "☁",
+                "09d": "🌧", 
+                "09n": "🌧",
+                "10d": "🌦", 
+                "10n": "🌧",
+                "11d": "⛈", 
+                "11n": "⛈",
+                "13d": "❄", 
+                "13n": "❄",
+                "50d": "🌫", 
+                "50n": "🌫"
+            };
+            element.innerHTML = icons[code] || "☁"; 
+        }
+
+        fetchWeather();
+        fetchHourlyForecast();
+    </script>
+
+</body>
+</html>

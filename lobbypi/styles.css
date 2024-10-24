@@ -1,0 +1,24 @@
+div {
+   
+}
+
+h1 {
+  text-shadow: 7px 7px #800020;
+}
+#clock  {
+  text-shadow: 7px 7px white;
+}
+
+font-family: 'Karla', sans-serif;
+font-family: 'Lilita One', cursive;
+
+/* CSS Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+#schedule {
+  font-family: Lilita One, cursive;
+  text-shadow: 7px 7px #800020
+}

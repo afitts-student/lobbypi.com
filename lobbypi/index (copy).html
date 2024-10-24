@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>LobbyPi Time</title>
+  <style>
+    body {
+      background-image: url('ths.png');
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-family: 'Anton', serif;
+      font-weight: 600;
+      font-size: 100px;
+      color: #f7bf14;
+      margin-top: 50px;
+    }
+
+    #clock {
+      font-family: 'REM', sans-serif;
+      font-size: 300px;
+      text-align: center;
+      color: #800020;
+      margin-top: 50px;
+    }
+
+    #schedule {
+      font-family: 'Lilita One', sans-serif;
+      font-size: 100px;
+      text-align: center;
+      color: white;
+      margin-top: 95px;
+    }
+  </style>
+  <link rel="shortcut icon" href="lobbypibythssysnet.png" />
+  <link rel="manifest" href="tmanifest.json">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Karla:wght@900&family=Lilita+One&family=REM:wght@550&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <img src="thslogo.png" alt="THS Logo"
+    style="position: absolute; top: 55px; right: 30px; width: 200px; height: 200px;">
+  <center>
+    <h1>Welcome Back to THS!</h1>
+  </center>
+  <div id="clock"></div>
+  <div id="schedule">
+    <p id="day-period"></p>
+  </div>
+
+  <script>
+    // JavaScript code to get the current day and period
+    var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var currentDay = daysOfWeek[new Date().getDay()];
+
+    // Function to get the current period based on time
+    function getCurrentPeriod() {
+      var currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
+      // Rest of your code...
+
+    }
+
+    // Get the current period and display the day and period on the HTML page
+    var currentPeriod = getCurrentPeriod();
+    if (currentPeriod) {
+      document.getElementById("day-period").innerHTML = currentDay + " | " + currentPeriod;
+    } else {
+      document.getElementById("day-period").innerHTML = currentDay;
+    }
+  </script>
+
+  <script>
+    function updateTime() {
+      var clock = document.getElementById('clock');
+      var currentTime = new Date();
+      var hours = currentTime.getHours();
+      var minutes = currentTime.getMinutes();
+      var seconds = currentTime.getSeconds();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+
+      // Convert hours to 12-hour format
+      hours = hours % 12 || 12;
+
+      // Add leading zeros to minutes and seconds if necessary
+      minutes = padZero(minutes);
+      seconds = padZero(seconds);
+
+      // Update the clock display
+      clock.innerHTML = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+    }
+
+    function padZero(num) {
+      return (num < 10 ? '0' : '') + num;
+    }
+
+    // Update every second
+    setInterval(updateTime, 1000);
+
+    // Call updateTime once on page load to initialize the clock
+    updateTime();
+  </script>
+
+  <script>
+    // JavaScript code to get the current day and period
+    var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var currentDay = daysOfWeek[new Date().getDay()];
+
+    // Function to get the current period based on time
+    function getCurrentPeriod() {
+      var currentTime = new Date();
+      var hours = currentTime.getHours();
+      var minutes = currentTime.getMinutes();
+      var formattedTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+
+      if (formattedTime >= '08:30' && formattedTime < '09:10') {
+        return "Period 1";
+      } else if (formattedTime >= '09:10' && formattedTime < '09:15') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '09:15' && formattedTime < '09:55') {
+        return "Period 2";
+      } else if (formattedTime >= '09:55' && formattedTime < '10:00') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '10:00' && formattedTime < '10:40') {
+        return "Period 3";
+      } else if (formattedTime >= '10:40' && formattedTime < '10:45') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '10:45' && formattedTime < '11:25') {
+        return "Period 4";
+      } else if (formattedTime >= '11:25' && formattedTime < '11:30') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '11:30' && formattedTime < '12:10') {
+        return "Period 5";
+      } else if (formattedTime >= '12:10' && formattedTime < '12:15') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '12:15' && formattedTime < '12:55') {
+        return "Period 6";
+      } else if (formattedTime >= '12:55' && formattedTime < '13:00') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '13:00' && formattedTime < '13:40') {
+        return "Period 7";
+      } else if (formattedTime >= '13:40' && formattedTime < '13:45') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '13:45' && formattedTime < '14:25') {
+        return "Period 8";
+      } else if (formattedTime >= '14:25' && formattedTime < '14:30') {
+        return "Five Minute Break";
+      } else if (formattedTime >= '14:30' && formattedTime < '15:10') {
+        return "Period 9";
+      } else {
+        return null; // Return null if outside of school hours
+      }
+    }
+
+    // Get the current period and display the day and period on the HTML page
+    var currentPeriod = getCurrentPeriod();
+    if (currentPeriod) {
+      document.getElementById("day-period").innerHTML = currentDay + " | " + currentPeriod;
+    } else {
+      document.getElementById("day-period").innerHTML = currentDay;
+    }
+  </script>
+
+
+</body>
+
+</html>

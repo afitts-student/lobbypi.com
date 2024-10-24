@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>LobbyPi Time</title>
+  <link rel="shortcut icon" href="lobbypi/favicon.ico" />
+  <link rel="manifest" href="clock/manifest.json">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:wght@900&family=REM&family=Lilita+One&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'REM', sans-serif;
+      background-image: url('ths.png');
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-family: 'Karla', serif;
+      font-weight: 900;
+      font-size: 100px;
+      color:#ffff00;
+      margin-top: 50px;
+    }
+
+    #clock {
+      font-family: 'REM', sans-serif;
+      font-size: 300px;
+      text-align: center;
+      color:#800020;
+      margin-top: 50px;
+    }
+
+    #schedule {
+      font-family: 'Lilita One', sans-serif;
+      font-size: 50px;
+      text-align: center;
+      color:white;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <center><h1><u>Welcome Back to THS!</u></h1></center>
+  <div id="clock"></div>
+  <div id="schedule"></div>
+
+  <script>
+    function updateTime() {
+      var clock = document.getElementById('clock');
+      var currentTime = new Date();
+      var hours = currentTime.getHours();
+      var minutes = currentTime.getMinutes();
+      var seconds = currentTime.getSeconds();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+
+      // Convert hours to 12-hour format
+      hours = hours % 12 || 12;
+
+      // Add leading zeros to minutes and seconds if necessary
+      minutes = padZero(minutes);
+      seconds = padZero(seconds);
+
+      // Update the clock display
+      clock.innerHTML = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+    }
+
+    function padZero(num) {
+      return (num < 10 ? '0' : '') + num;
+    }
+
+    // Update every second
+    setInterval(updateTime, 1000);
+
+    // Call updateTime once on page load to initialize the clock
+    updateTime();
+  </script>
+
+  <!DOCTYPE html>
+<html>
+<head>
+    <title>Your School Website</title>
+</head>
+<body>
+   
+    <div id="schedule">
+        <p id="day-period"></p>
+    </div>
+
+    <script>
+
+        // JavaScript code to get the current day and period
+        var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var currentDay = daysOfWeek[new Date().getDay()];
+
+        // Function to get the current period based on time
+        function getCurrentPeriod() {
+            var currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            if (currentTime >= '08:30' && currentTime < '09:10') {
+                return "Period 1";
+            } else if (currentTime >= '09:15' && currentTime < '09:55') {
+                return "Period 2";
+            } else if (currentTime >= '10:00' && currentTime < '10:40') {
+                return "Period 3";
+            } else if (currentTime >= '10:45' && currentTime < '11:25') {
+                return "Period 4";
+            } else if (currentTime >= '11:30' && currentTime < '12:10') {
+                return "Period 5";
+            } else if (currentTime >= '12:15' && currentTime < '12:55') {
+                return "Period 6";
+            } else if (currentTime >= '13:00' && currentTime < '13:40') {
+                return "Period 7";
+            } else if (currentTime >= '13:45' && currentTime < '14:25') {
+                return "Period 8";
+            } else if (currentTime >= '14:30' && currentTime < '15:10') {
+                return "Period 9";
+            } else {
+                return null; // Return null if outside of school hours
+            }
+        }
+
+        // Get the current period and display the day and period on the HTML page
+        var currentPeriod = getCurrentPeriod();
+        if (currentPeriod) {
+            document.getElementById("day-period").innerHTML = currentDay + " | " + currentPeriod;
+        } else {
+            document.getElementById("day-period").innerHTML = currentDay;
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LobbyPi Weather</title>
+    <style>
+        body {
+            font-family: "Karla", sans-serif;
+            text-align: center;
+        }
+        #weatherInfo {
+            margin-top: 20px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Karla:wght@900&family=Lilita+One&family=REM:wght@550&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+    <link rel="shortcut icon" href="lobbypibythssysnet.png"/>
+    <link rel="stylesheet" href="weatherstyles.css">
+</head>
+<body>
+    <h1>Weather in Hoboken, New Jersey</h1>
+    <div id="weatherInfo">
+        <h2>
+            <span id="clock">00:00:00</span>
+            <i id="weatherIcon" class=""></i>
+        </h2>
+        <h3 id="weatherDetails"></h3>
+    </div>
+
+    <script>
+        const apiKey = '9f39a7dd8299cd146e3e2fc7d91850cb'; // Replace with your OpenWeatherMap API key
+        const city = 'Hoboken,us';
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const weatherIconElement = document.getElementById('weatherIcon');
+                const weatherDetailsElement = document.getElementById('weatherDetails');
+                const capitalizedDescription = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
+
+                // Weather icons mapping based on OpenWeatherMap weather codes using "Weather Icons"
+                const weatherIcons = {
+                    '01d': 'wi-day-sunny',
+                    '01n': 'wi-night-clear',
+                    '02d': 'wi-day-cloudy',
+                    '02n': 'wi-night-alt-cloudy',
+                    '03d': 'wi-cloud',
+                    '03n': 'wi-cloud',
+                    '04d': 'wi-cloudy',
+                    '04n': 'wi-cloudy',
+                    '09d': 'wi-showers',
+                    '09n': 'wi-showers',
+                    '10d': 'wi-rain',
+                    '10n': 'wi-rain',
+                    '11d': 'wi-thunderstorm',
+                    '11n': 'wi-thunderstorm',
+                    '13d': 'wi-snow',
+                    '13n': 'wi-snow',
+                    '50d': 'wi-fog',
+                    '50n': 'wi-fog',
+                    // Add more mappings as needed...
+                };
+
+                const weatherIconClass = weatherIcons[data.weather[0].icon] || 'wi-day-sunny'; // Default to sunny icon if not found
+                weatherIconElement.className = `wi ${weatherIconClass}`;
+
+                const precipitationChance = data.rain ? `${data.rain["1h"]} mm/h` : 'No Rain';
+                weatherDetailsElement.innerHTML = `
+                    <p>Temperature: ${Math.round(data.main.temp)} °F</p>
+                    <p>Weather: ${capitalizedDescription}</p>
+                    <p>Humidity: ${data.main.humidity}%</p>
+                    <p>Wind Speed: ${Math.round(data.wind.speed)} mph</p>
+                    <p>Precipitation: ${precipitationChance}</p>
+                `;
+            })
+            .catch(error => {
+                console.error('Error fetching weather data:', error);
+                const weatherDetailsElement = document.getElementById('weatherDetails');
+                weatherDetailsElement.innerHTML = `<p>Error fetching weather data. Please try again later.</p>`;
+            });
+
+        function updateTime() {
+            var clock = document.getElementById('clock');
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+
+            // Convert hours to 12-hour format
+            hours = hours % 12 || 12;
+
+            // Add leading zeros to minutes and seconds if necessary
+            minutes = padZero(minutes);
+            seconds = padZero(seconds);
+
+            // Update the clock display
+            clock.innerHTML = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        }
+
+        function padZero(num) {
+            return (num < 10 ? '0' : '') + num;
+        }
+
+        // Update every second
+        setInterval(updateTime, 1000);
+
+        // Call updateTime once on page load to initialize the clock
+        updateTime();
+    </script>
+</body>
+</html>
