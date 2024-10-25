@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="icon" type="image/x-icon" href="images/thssysnet.ico">
+  <title>School Days Countdown</title>
+  <style>
+    body {
+      font-family: "Darumadrop One", sans-serif;
+      font-size: 55px;
+      color: black;
+      text-align: center;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap" rel="stylesheet">
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      var today = new Date();
+      var endDate = new Date(2023, 5, 13, 12, 10); // June 13, 2023, 12:10 PM
+
+      if (today < endDate && today.getDay() !== 0 && today.getDay() !== 6) {
+        var startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1, 8, 30); // Start from tomorrow at 8:30 AM
+        var remainingSchoolDays = calculateRemainingSchoolDays(today, endDate);
+
+        // Display the remaining school days
+        var countdownElement = document.getElementById('countdown');
+        countdownElement.textContent = remainingSchoolDays.toFixed(2) + ' school days left';
+      } else {
+        var countdownElement = document.getElementById('countdown');
+        countdownElement.textContent = 'SCHOOL IS OVER! HAPPY SUMMER BREAK!';
+      }
+    });
+
+    function calculateRemainingSchoolDays(today, endDate) {
+      var remainingDays = 0;
+      var currentDate = new Date(today);
+
+      while (currentDate < endDate) {
+        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+          remainingDays += 1;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      var remainingSchoolDays = remainingDays + calculateDecimalPart();
+
+      return Math.max(0, remainingSchoolDays);
+    }
+
+    function calculateDecimalPart() {
+      var currentTime = new Date().toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' });
+      var hour = parseInt(currentTime.split(':')[0]);
+      var minute = parseInt(currentTime.split(':')[1]);
+
+      if (hour >= 15 || (hour === 12 && minute >= 10)) {
+        return 0; // No decimal part after school ends on a day
+      } else {
+        var decimalPart = Math.floor(((15 - hour) * 100 + ((60 - minute) / 40) * 10)) / 100;
+        return decimalPart;
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="countdown"></div>
+</body>
+</html>

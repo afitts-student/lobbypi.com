@@ -1,0 +1,216 @@
+<title>Thssysnet Clock</title>
+<style>
+body {
+  background-image: url('background.jpg');
+</style>
+<head>
+  <link rel="icon" type="image/x-icon" href="thssysnet2.ico">
+  
+
+  <link rel="manifest" href="tmanifest.json">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Luckiest+Guy&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="styles.css">
+<style>
+  body {
+    font-family: 'Permanent Marker', sans-serif;
+  }
+
+  h1 {
+    font-family: 'Luckiest Guy', serif;
+    font: weight; 200px;
+    font-size: 100px;
+    color: red; /* Set the font color to white */
+  }
+
+  p {
+    font-family: 'Permanent Marker', sans-serif;
+    font-size; 700px;
+    color: white;
+  }
+</style>
+
+ 
+
+</head>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <style>
+    #clock {
+      font-size: 475px;
+      font-family: 'Permanent Marker', sans-serif;
+      text-align: center;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  
+
+<!DOCTYPE html>
+<html>
+<head>
+  <center>
+  <u>
+  <h1>THSSYSNET Clock</h1>
+  </u>
+  </center>
+  <title>Menu Example</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    body {
+      font-family: "Permanent Marker", sans-serif;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu-container {
+      position: relative;
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 0;
+      right: 20;
+      display: block;
+      cursor: pointer;
+      padding: 10px;
+      background-color: #333;
+      color: #fff;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .menu-icon {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background-color: #fff;
+      margin-bottom: 4px;
+      transition: transform 0.3s;
+    }
+
+    .menu {
+      position: absolute;
+      top: 40px;
+      right: 20;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background-color: #333;
+      border-radius: 4px;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.3s;
+    }
+
+    .menu li {
+      padding: 10px;
+    }
+
+    .menu a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    input[type="checkbox"]:checked ~ .menu {
+      transform: scaleY(1);
+    }
+
+    input[type="checkbox"]:checked ~ .menu-button .menu-icon {
+      transform: rotate(45deg);
+    }
+
+    input[type="checkbox"]:checked ~ .menu-button .menu-icon:first-child {
+      transform: translateY(6px) rotate(-45deg);
+    }
+
+    input[type="checkbox"]:checked ~ .menu-button .menu-icon:last-child {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-container">
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-button">
+      <span class="menu-icon"></span>
+    </label>
+    <ul class="menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="https://mail.zoho.com">Thssysnet Mail</a></li>
+       <li><a href="https://thssysnet.pw/lobbypi/index.html">LobbyPi Clock</a></li>
+      <!--<li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li> -->
+    </ul>
+  </div>
+  <!DOCTYPE html>
+<html>
+<head>
+  <style>
+    #clock {
+      font-size: 125px;
+      font-family: 'Permanent Marker', sans-serif;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock"></div>
+
+  <script>
+    function updateTime() {
+      var clock = document.getElementById('clock');
+      var currentTime = new Date();
+      var hours = currentTime.getHours();
+      var minutes = currentTime.getMinutes();
+      var seconds = currentTime.getSeconds();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+
+      // Convert hours to 12-hour format
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+
+      // Add leading zeros to minutes and seconds if necessary
+      minutes = padZero(minutes);
+      seconds = padZero(seconds);
+
+      // Update the clock display
+      clock.innerHTML = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+    }
+
+    function padZero(num) {
+      return (num < 10 ? '0' : '') + num;
+    }
+
+    // Update every second
+    setInterval(updateTime, 1000);
+  </script>
+<br>
+
+<style>
+    body {
+      font-family: "Permanent Marker", sans-serif;
+      font-size: 45px;
+      color: lightblue;
+      text-align: center;
+    }
+  </style>
+  
+  
+  
+
+</body>
+</html>
+
+</body>
