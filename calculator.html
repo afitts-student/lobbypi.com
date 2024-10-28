@@ -218,6 +218,35 @@
             answer.innerHTML = 'Result: ' + result; // Show answer
             expression = '';
         }
+
+        // Keyboard event listener
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+
+            // Handle number keys
+            if (!isNaN(key) || key === '.') {
+                appendNumber(key);
+            }
+            // Handle operator keys
+            else if (['+', '-', '*', '/'].includes(key)) {
+                setOperator(key);
+            }
+            // Handle parentheses
+            else if (key === '(') {
+                appendParenthesis('(');
+            }
+            else if (key === ')') {
+                appendParenthesis(')');
+            }
+            // Handle calculate
+            else if (key === 'Enter') {
+                calculate();
+            }
+            // Handle clear
+            else if (key === 'Backspace') {
+                clearDisplay();
+            }
+        });
     </script>
 </body>
 
