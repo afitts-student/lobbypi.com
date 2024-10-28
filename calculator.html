@@ -20,40 +20,42 @@
     }
 
     h1 {
-      font-family: 'Anton', serif;
       font-weight: 600;
-      font-size: 80px;
+      font-size: 60px; /* Reduced font size */
       color: #f7bf14;
       margin-bottom: 20px;
+      font-family: 'Anton', sans-serif;
     }
 
     .calculator {
       display: grid;
-      grid-template-columns: repeat(5, 90px);
+      grid-template-columns: repeat(4, 1fr); /* Four columns layout */
       gap: 10px;
       background-color: rgba(255, 255, 255, 0.8);
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 95%; /* Use more width */
+      max-width: 600px; /* Set a max-width */
     }
 
     .display {
-      grid-column: span 5;
-      height: 80px;
+      grid-column: span 4; /* Span across all columns */
+      height: 70px; /* Adjusted height */
       text-align: right;
-      font-size: 2em;
+      font-size: 2em; /* Font size for the display */
       padding: 10px;
       border-radius: 10px;
       border: 1px solid #ddd;
       color: #800020;
       background-color: white;
-      font-family: 'REM', sans-serif;
+      font-family: 'REM', sans-serif; /* REM font for the display */
     }
 
     .button {
-      width: 90px;
-      height: 80px;
-      font-size: 1.2em;
+      width: 100%; /* Make buttons take full width */
+      height: 60px; /* Adjusted height for buttons */
+      font-size: 1.5em; /* Font size for buttons */
       color: #333;
       background-color: #f7bf14;
       border: none;
@@ -74,6 +76,15 @@
     .button.operator:hover {
       background-color: #5c0015;
     }
+
+    .answer {
+      font-family: 'Lilita One', sans-serif; /* Lilita One font for answers */
+      font-size: 1.5em; /* Font size for answers */
+      color: #800020;
+      margin-top: 20px;
+      text-align: center;
+      grid-column: span 4;
+    }
   </style>
 </head>
 
@@ -82,41 +93,45 @@
   <div class="calculator">
     <input type="text" id="display" class="display" disabled>
 
-    <!-- Scientific Operation Buttons -->
-    <button class="button operator" onclick="calculateSin()">sin</button>
-    <button class="button operator" onclick="calculateCos()">cos</button>
-    <button class="button operator" onclick="calculateTan()">tan</button>
-    <button class="button operator" onclick="calculateLog()">log</button>
-    <button class="button operator" onclick="calculateSqrt()">√</button>
-
     <!-- Number and Basic Operation Buttons -->
     <button class="button" onclick="appendNumber(7)">7</button>
     <button class="button" onclick="appendNumber(8)">8</button>
     <button class="button" onclick="appendNumber(9)">9</button>
     <button class="button operator" onclick="setOperator('/')">/</button>
-    <button class="button operator" onclick="clearDisplay()">C</button>
 
     <button class="button" onclick="appendNumber(4)">4</button>
     <button class="button" onclick="appendNumber(5)">5</button>
     <button class="button" onclick="appendNumber(6)">6</button>
     <button class="button operator" onclick="setOperator('*')">*</button>
-    <button class="button operator" onclick="backspace()">DEL</button>
 
     <button class="button" onclick="appendNumber(1)">1</button>
     <button class="button" onclick="appendNumber(2)">2</button>
     <button class="button" onclick="appendNumber(3)">3</button>
     <button class="button operator" onclick="setOperator('-')">-</button>
-    <button class="button" onclick="appendParenthesis('(')">(</button>
 
     <button class="button" onclick="appendNumber(0)">0</button>
     <button class="button" onclick="appendDot()">.</button>
     <button class="button operator" onclick="setOperator('+')">+</button>
-    <button class="button" onclick="appendParenthesis(')')">)</button>
-    <button class="button" onclick="calculate()">=</button>
+    <button class="button operator" onclick="clearDisplay()">C</button>
+
+    <!-- Scientific Operation Buttons -->
+    <button class="button operator" onclick="calculateSqrt()">√</button>
+    <button class="button operator" onclick="calculateLog()">log</button>
+    <button class="button operator" onclick="calculateSin()">sin</button>
+    <button class="button operator" onclick="calculateCos()">cos</button>
+    <button class="button operator" onclick="calculateTan()">tan</button>
+    
+    <button class="button operator" onclick="appendParenthesis('(')">(</button>
+    <button class="button operator" onclick="appendParenthesis(')')">)</button>
+    <button class="button" style="grid-column: span 4;" onclick="calculate()">=</button>
+
+    <!-- Display for answer -->
+    <div class="answer" id="answer"></div>
   </div>
 
   <script>
     let display = document.getElementById('display');
+    let answer = document.getElementById('answer');
     let expression = '';
 
     function appendNumber(number) {
@@ -137,11 +152,7 @@
     function clearDisplay() {
       expression = '';
       display.value = '';
-    }
-
-    function backspace() {
-      expression = expression.slice(0, -1);
-      display.value = expression;
+      answer.innerHTML = ''; // Clear answer on reset
     }
 
     function appendParenthesis(paren) {
@@ -153,35 +164,47 @@
       try {
         expression = eval(expression).toString();
         display.value = expression;
+        answer.innerHTML = ''; // Clear answer display after calculation
       } catch (error) {
         display.value = 'Error';
+        answer.innerHTML = '';
         expression = '';
       }
     }
 
     function calculateSin() {
-      expression = Math.sin(eval(expression)).toString();
-      display.value = expression;
+      const result = Math.sin(eval(expression));
+      display.value = result;
+      answer.innerHTML = 'Result: ' + result; // Show answer
+      expression = '';
     }
 
     function calculateCos() {
-      expression = Math.cos(eval(expression)).toString();
-      display.value = expression;
+      const result = Math.cos(eval(expression));
+      display.value = result;
+      answer.innerHTML = 'Result: ' + result; // Show answer
+      expression = '';
     }
 
     function calculateTan() {
-      expression = Math.tan(eval(expression)).toString();
-      display.value = expression;
+      const result = Math.tan(eval(expression));
+      display.value = result;
+      answer.innerHTML = 'Result: ' + result; // Show answer
+      expression = '';
     }
 
     function calculateLog() {
-      expression = Math.log10(eval(expression)).toString();
-      display.value = expression;
+      const result = Math.log10(eval(expression));
+      display.value = result;
+      answer.innerHTML = 'Result: ' + result; // Show answer
+      expression = '';
     }
 
     function calculateSqrt() {
-      expression = Math.sqrt(eval(expression)).toString();
-      display.value = expression;
+      const result = Math.sqrt(eval(expression));
+      display.value = result;
+      answer.innerHTML = 'Result: ' + result; // Show answer
+      expression = '';
     }
   </script>
 </body>
