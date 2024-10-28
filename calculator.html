@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      background-image: url('thsstudents.png');
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Anton', sans-serif;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 80px;
+      color: #f7bf14;
+      margin-bottom: 20px;
+    }
+
+    .calculator {
+      display: grid;
+      grid-template-columns: repeat(4, 100px);
+      gap: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .display {
+      grid-column: span 4;
+      height: 80px;
+      text-align: right;
+      font-size: 2em;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      color: #800020;
+      background-color: white;
+    }
+
+    .button {
+      width: 100px;
+      height: 80px;
+      font-size: 1.5em;
+      color: #333;
+      background-color: #f7bf14;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #e1a10a;
+    }
+
+    .button.operator {
+      background-color: #800020;
+      color: white;
+    }
+
+    .button.operator:hover {
+      background-color: #5c0015;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Simple Calculator</h1>
+  <div class="calculator">
+    <input type="text" id="display" class="display" disabled>
+
+    <button class="button" onclick="appendNumber(7)">7</button>
+    <button class="button" onclick="appendNumber(8)">8</button>
+    <button class="button" onclick="appendNumber(9)">9</button>
+    <button class="button operator" onclick="setOperator('+')">+</button>
+
+    <button class="button" onclick="appendNumber(4)">4</button>
+    <button class="button" onclick="appendNumber(5)">5</button>
+    <button class="button" onclick="appendNumber(6)">6</button>
+    <button class="button operator" onclick="setOperator('-')">-</button>
+
+    <button class="button" onclick="appendNumber(1)">1</button>
+    <button class="button" onclick="appendNumber(2)">2</button>
+    <button class="button" onclick="appendNumber(3)">3</button>
+    <button class="button operator" onclick="setOperator('*')">*</button>
+
+    <button class="button" onclick="appendNumber(0)">0</button>
+    <button class="button" onclick="appendDot()">.</button>
+    <button class="button" onclick="clearDisplay()">C</button>
+    <button class="button operator" onclick="setOperator('/')">/</button>
+
+    <button class="button" style="grid-column: span 4;" onclick="calculate()">=</button>
+  </div>
+
+  <script>
+    let display = document.getElementById('display');
+    let currentOperator = null;
+    let firstOperand = '';
+    let secondOperand = '';
+
+    function appendNumber(number) {
+      display.value += number;
+      if (!currentOperator) {
+        firstOperand += number;
+      } else {
+        secondOperand += number;
+      }
+    }
+
+    function setOperator(operator) {
+      if (!firstOperand) return; // Prevents setting operator if no first operand
+      currentOperator = operator;
+      display.value += ' ' + operator + ' ';
+    }
+
+    function appendDot() {
+      if (!currentOperator) {
+        if (!firstOperand.includes('.')) {
+          firstOperand += '.';
+          display.value += '.';
+        }
+      } else {
+        if (!secondOperand.includes('.')) {
+          secondOperand += '.';
+          display.value += '.';
+        }
+      }
+    }
+
+    function clearDisplay() {
+      display.value = '';
+      currentOperator = null;
+      firstOperand = '';
+      secondOperand = '';
+    }
+
+    function calculate() {
+      if (currentOperator && secondOperand) {
+        const a = parseFloat(firstOperand);
+        const b = parseFloat(secondOperand);
+        let result;
+
+        switch (currentOperator) {
+          case '+':
+            result = a + b;
+            break;
+          case '-':
+            result = a - b;
+            break;
+          case '*':
+            result = a * b;
+            break;
+          case '/':
+            result = a / b;
+            break;
+        }
+
+        display.value = result;
+        firstOperand = result.toString();
+        secondOperand = '';
+        currentOperator = null;
+      }
+    }
+  </script>
+</body>
+
+</html>
