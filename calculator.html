@@ -20,6 +20,7 @@
     }
 
     h1 {
+      font-family: 'Anton', serif;
       font-weight: 600;
       font-size: 80px;
       color: #f7bf14;
@@ -28,7 +29,7 @@
 
     .calculator {
       display: grid;
-      grid-template-columns: repeat(4, 100px);
+      grid-template-columns: repeat(5, 90px);
       gap: 10px;
       background-color: rgba(255, 255, 255, 0.8);
       padding: 20px;
@@ -37,7 +38,7 @@
     }
 
     .display {
-      grid-column: span 4;
+      grid-column: span 5;
       height: 80px;
       text-align: right;
       font-size: 2em;
@@ -46,12 +47,13 @@
       border: 1px solid #ddd;
       color: #800020;
       background-color: white;
+      font-family: 'REM', sans-serif;
     }
 
     .button {
-      width: 100px;
+      width: 90px;
       height: 80px;
-      font-size: 1.5em;
+      font-size: 1.2em;
       color: #333;
       background-color: #f7bf14;
       border: none;
@@ -76,31 +78,41 @@
 </head>
 
 <body>
-  <h1>Simple Calculator</h1>
+  <h1>LobbyPi Scientific Calculator</h1>
   <div class="calculator">
     <input type="text" id="display" class="display" disabled>
+
+    <!-- Basic Operation Buttons -->
+    <button class="button" onclick="clearDisplay()">C</button>
+    <button class="button operator" onclick="setOperator('^')">^</button>
+    <button class="button operator" onclick="setOperator('/')">/</button>
+    <button class="button operator" onclick="setOperator('*')">*</button>
+    <button class="button operator" onclick="backspace()">DEL</button>
 
     <button class="button" onclick="appendNumber(7)">7</button>
     <button class="button" onclick="appendNumber(8)">8</button>
     <button class="button" onclick="appendNumber(9)">9</button>
-    <button class="button operator" onclick="setOperator('+')">+</button>
+    <button class="button operator" onclick="setOperator('-')">-</button>
+    <button class="button" onclick="calculate()">=</button>
 
     <button class="button" onclick="appendNumber(4)">4</button>
     <button class="button" onclick="appendNumber(5)">5</button>
     <button class="button" onclick="appendNumber(6)">6</button>
-    <button class="button operator" onclick="setOperator('-')">-</button>
+    <button class="button operator" onclick="setOperator('+')">+</button>
 
     <button class="button" onclick="appendNumber(1)">1</button>
     <button class="button" onclick="appendNumber(2)">2</button>
     <button class="button" onclick="appendNumber(3)">3</button>
-    <button class="button operator" onclick="setOperator('*')">*</button>
+    <button class="button" onclick="appendDot()">.</button>
 
     <button class="button" onclick="appendNumber(0)">0</button>
-    <button class="button" onclick="appendDot()">.</button>
-    <button class="button" onclick="clearDisplay()">C</button>
-    <button class="button operator" onclick="setOperator('/')">/</button>
 
-    <button class="button" style="grid-column: span 4;" onclick="calculate()">=</button>
+    <!-- Scientific Operation Buttons -->
+    <button class="button operator" onclick="calculateSin()">sin</button>
+    <button class="button operator" onclick="calculateCos()">cos</button>
+    <button class="button operator" onclick="calculateTan()">tan</button>
+    <button class="button operator" onclick="calculateLog()">log</button>
+    <button class="button operator" onclick="calculateSqrt()">√</button>
   </div>
 
   <script>
@@ -108,8 +120,13 @@
     let currentOperator = null;
     let firstOperand = '';
     let secondOperand = '';
+    let resultCalculated = false;
 
     function appendNumber(number) {
+      if (resultCalculated) {
+        clearDisplay();
+        resultCalculated = false;
+      }
       display.value += number;
       if (!currentOperator) {
         firstOperand += number;
@@ -125,16 +142,12 @@
     }
 
     function appendDot() {
-      if (!currentOperator) {
-        if (!firstOperand.includes('.')) {
-          firstOperand += '.';
-          display.value += '.';
-        }
-      } else {
-        if (!secondOperand.includes('.')) {
-          secondOperand += '.';
-          display.value += '.';
-        }
+      if (!currentOperator && !firstOperand.includes('.')) {
+        firstOperand += '.';
+        display.value += '.';
+      } else if (!secondOperand.includes('.')) {
+        secondOperand += '.';
+        display.value += '.';
       }
     }
 
@@ -145,6 +158,15 @@
       secondOperand = '';
     }
 
+    function backspace() {
+      display.value = display.value.slice(0, -1);
+      if (currentOperator && secondOperand) {
+        secondOperand = secondOperand.slice(0, -1);
+      } else if (!currentOperator) {
+        firstOperand = firstOperand.slice(0, -1);
+      }
+    }
+
     function calculate() {
       if (currentOperator && secondOperand) {
         const a = parseFloat(firstOperand);
@@ -152,25 +174,49 @@
         let result;
 
         switch (currentOperator) {
-          case '+':
-            result = a + b;
-            break;
-          case '-':
-            result = a - b;
-            break;
-          case '*':
-            result = a * b;
-            break;
-          case '/':
-            result = a / b;
-            break;
+          case '+': result = a + b; break;
+          case '-': result = a - b; break;
+          case '*': result = a * b; break;
+          case '/': result = a / b; break;
+          case '^': result = Math.pow(a, b); break;
         }
 
         display.value = result;
         firstOperand = result.toString();
         secondOperand = '';
         currentOperator = null;
+        resultCalculated = true;
       }
+    }
+
+    function calculateSin() {
+      firstOperand = Math.sin(parseFloat(display.value)).toString();
+      display.value = firstOperand;
+      resultCalculated = true;
+    }
+
+    function calculateCos() {
+      firstOperand = Math.cos(parseFloat(display.value)).toString();
+      display.value = firstOperand;
+      resultCalculated = true;
+    }
+
+    function calculateTan() {
+      firstOperand = Math.tan(parseFloat(display.value)).toString();
+      display.value = firstOperand;
+      resultCalculated = true;
+    }
+
+    function calculateLog() {
+      firstOperand = Math.log10(parseFloat(display.value)).toString();
+      display.value = firstOperand;
+      resultCalculated = true;
+    }
+
+    function calculateSqrt() {
+      firstOperand = Math.sqrt(parseFloat(display.value)).toString();
+      display.value = firstOperand;
+      resultCalculated = true;
     }
   </script>
 </body>
