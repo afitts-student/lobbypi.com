@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LobbyPi Scientific Calculator</title>
+    <link rel="shortcut icon" href="lobbypi.png" />
+    <link rel="manifest" href="tmanifest.json">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Lilita+One&family=REM:wght@550&display=swap" rel="stylesheet">
     <style>
         body {
             background-image: url('lobbypi/thsstudents.png');
@@ -16,12 +20,13 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            font-family: 'Anton', sans-serif;
+            font-family: 'Anton', sans-serif; /* Font for title */
         }
 
         h1 {
+            font-family: 'Anton', serif;
             font-weight: 600;
-            font-size: 60px; /* Reduced font size */
+            font-size: 80px; /* Adjusted font size */
             color: #f7bf14;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Added text shadow */
@@ -43,7 +48,7 @@
             grid-column: span 4; /* Span across all columns */
             height: 80px; /* Adjusted height */
             text-align: right;
-            font-size: 2em; /* Font size for the display */
+            font-size: 2.5em; /* Font size for the display */
             padding: 10px;
             border-radius: 10px;
             border: 1px solid #ddd;
@@ -80,11 +85,11 @@
 
         .answer {
             font-family: 'Lilita One', sans-serif; /* Lilita One font for answers */
-            font-size: 1.5em; /* Font size for answers */
+            font-size: 2em; /* Font size for answers */
             color: #800020;
             margin-top: 20px;
             text-align: center;
-            grid-column: span 4;
+            grid-column: span 4; /* Centered result */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* Added text shadow */
         }
     </style>
@@ -150,8 +155,10 @@
         }
 
         function appendDot() {
-            expression += '.';
-            display.value = expression;
+            if (!expression.endsWith('.')) { // Prevents adding multiple dots
+                expression += '.';
+                display.value = expression;
+            }
         }
 
         function clearDisplay() {
