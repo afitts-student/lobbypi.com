@@ -1,0 +1,24 @@
+div {
+   
+}
+
+h1 {
+  text-shadow: 7px 7px #800020;
+}
+  
+font-family: 'Karla', sans-serif;
+font-family: 'Lilita One', cursive;
+
+/* CSS Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Your original CSS code */
+body {
+  background-image: url('ths.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
