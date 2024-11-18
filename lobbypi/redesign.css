@@ -3,10 +3,10 @@ div {
 }
 
 h1 {
-  text-shadow: 7px 7px 7px red;
+  text-shadow: 7px 7px 7px #f7bf14;
 }
 #clock  {
-  text-shadow: 7px 7px white;
+  text-shadow: 7px 7px #f7bf14;
 }
 
 font-family: 'Karla', sans-serif;
