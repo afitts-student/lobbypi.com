@@ -3,7 +3,7 @@ div {
 }
 
 h1 {
-  text-shadow: 7px 7px #800020;
+  text-shadow: 7px 7px 7px #800020;
 }
 #clock  {
   text-shadow: 7px 7px white;
