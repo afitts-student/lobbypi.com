@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thssysnet Services</title>
+  <link rel="icon" href="thssysnet2.ico" type="image/x-icon">
+  <link rel="manifest" href="manifest.json">
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #2c3e50;
+    }
+
+    .service-container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      font-size: 1.1em;
+      color: white;
+      background-color: #3498db;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <img src="thssysnet2.ico" alt="Thssysnet Logo" width="200">
+
+  <h1>Our Services</h1>
+  <p>Use the tools directly on this page.</p>
+
+  <!-- Speed Test -->
+  <div class="service-container">
+    <h2>Speed Test</h2>
+    <p>Click below to measure your internet speed.</p>
+    <button class="button" onclick="startSpeedTest()">Start Speed Test</button>
+    <p id="speed-result"></p>
+  </div>
+
+  <!-- Ping Check -->
+  <div class="service-container">
+    <h2>Ping Check</h2>
+    <p>Enter a website or IP address to check its response time.</p>
+    <input type="text" id="ping-input" placeholder="e.g., google.com">
+    <button class="button" onclick="checkPing()">Check Ping</button>
+    <p id="ping-result"></p>
+  </div>
+
+  <a href="index.html" class="button">Back to Home</a>
+
+  <script>
+    async function startSpeedTest() {
+      document.getElementById("speed-result").innerText = "Testing...";
+      const response = await fetch("/speedtest");
+      const data = await response.json();
+      document.getElementById("speed-result").innerText = `Speed: ${data.speed} Mbps`;
+    }
+
+    async function checkPing() {
+      let host = document.getElementById("ping-input").value;
+      if (!host) {
+        document.getElementById("ping-result").innerText = "Please enter a valid website or IP.";
+        return;
+      }
+      document.getElementById("ping-result").innerText = "Pinging...";
+      const response = await fetch(`/ping?host=${host}`);
+      const data = await response.json();
+      document.getElementById("ping-result").innerText = `Ping: ${data.ping} ms`;
+    }
+  </script>
+</body>
+</html>

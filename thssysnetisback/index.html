@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thssysnet.pw</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400&family=Instrument+Serif&display=swap" rel="stylesheet">
+
+  <style>
+    /* General Page Styles */
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: #FF3131 url('THSSYSNET.png') no-repeat center center;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      transition: margin-left 0.3s ease-in-out;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #FF3131;
+      padding: 15px 20px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      z-index: 1000;
+      border-bottom: 3px solid white;
+      transition: background 0.3s, margin-left 0.3s ease-in-out;
+    }
+
+    .menu-btn {
+      font-size: 18px;
+      font-family: 'Instrument Serif', serif;
+      color: white;
+      background: transparent;
+      border: 2px solid white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .menu-btn:hover {
+      background-color: white;
+      color: #FF3131;
+    }
+
+    .logo {
+      justify-self: center;
+    }
+
+    .logo img {
+      height: 60px;
+      transition: height 0.3s;
+    }
+
+    .header.shrink .logo img {
+      height: 40px;
+    }
+
+    /* Empty element to balance the menu button */
+    .header-balance {
+      width: auto;
+    }
+
+    /* Sidebar Menu */
+    .sidebar {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background: #FF3131;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+      transition: left 0.3s;
+      text-align: center;
+      padding-top: 70px;
+      z-index: 1100;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 20px;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      border-bottom: 1px solid white;
+    }
+
+    .sidebar a:hover {
+      background: white;
+      color: #FF3131;
+    }
+
+    /* Content */
+    .content {
+      padding-top: 120px;
+      padding-bottom: 120px; /* Increase bottom padding so footer doesn't cover content */
+      transition: margin-left 0.3s ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 125px;
+      font-weight: normal;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .intro-text {
+      font-size: 20px;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    /* Button Styling */
+    .button {
+      padding: 12px 24px;
+      font-size: 20px;
+      font-family: 'Instrument Serif', serif;
+      color: white;
+      background-color: transparent;
+      border: 2px solid white;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .button:hover {
+      background-color: white;
+      color: #FF3131;
+    }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #FF3131;
+      padding: 15px 20px;
+      z-index: 900; /* lower than header */
+      border-top: 3px solid white;
+      transition: background 0.3s, margin-left 0.3s ease-in-out;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-content p {
+      margin: 0;
+      font-size: 16px;
+      color: white;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 5px;
+    }
+    
+    .footer a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer a:hover {
+      color: black;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 50px;
+      }
+
+      .intro-text {
+        font-size: 16px;
+      }
+
+      .button {
+        font-size: 18px;
+        padding: 10px 20px;
+      }
+
+      .sidebar {
+        width: 200px;
+      }
+
+      .content {
+        padding-top: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <!-- Header -->
+  <header class="header" id="header">
+    <button class="menu-btn" onclick="toggleSidebar()">Menu</button>
+    <div class="logo">
+      <a href="index.html">
+        <img src="thssysnet-logo.png" alt="Thssysnet Logo">
+      </a>
+    </div>
+    <div class="header-balance"></div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="content" id="content">
+    <h1>THSSYSNET IS BACK</h1>
+    <p class="intro-text">This is the home of Thssysnet Services, where you can find important, niche, services on one page!</p>
+    <p class="intro-text">Check in occasionally to see additional services from Thssysnet.</p>
+    <a href="services.html" class="button">Check Out Our Services</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Thssysnet. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Shrink header and footer on scroll
+    window.addEventListener('scroll', function() {
+      let header = document.getElementById('header');
+      let footer = document.getElementById('footer');
+      if (window.scrollY > 50) {
+        header.classList.add('shrink');
+        footer.classList.add('shrink');
+      } else {
+        header.classList.remove('shrink');
+        footer.classList.remove('shrink');
+      }
+    });
+
+    // Sidebar toggle
+    function toggleSidebar() {
+      let sidebar = document.getElementById('sidebar');
+      let content = document.getElementById('content');
+      let header = document.getElementById('header');
+      let footer = document.getElementById('footer');
+
+      if (sidebar.style.left === '0px') {
+        sidebar.style.left = '-250px';
+        content.style.marginLeft = '0';
+        header.style.marginLeft = '0';
+        footer.style.marginLeft = '0';
+      } else {
+        sidebar.style.left = '0px';
+        content.style.marginLeft = '250px';
+        header.style.marginLeft = '250px';
+        footer.style.marginLeft = '250px';
+      }
+    }
+  </script>
+</body>
+</html>
