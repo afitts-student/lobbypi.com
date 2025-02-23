@@ -17,8 +17,8 @@ body {
   width: 100%;
   background: #FF3131;
   padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   z-index: 1000;
   border-bottom: 3px solid white;
@@ -44,9 +44,7 @@ body {
 }
 
 .logo {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
+  justify-self: center;
 }
 
 .logo img {
@@ -56,6 +54,11 @@ body {
 
 .header.shrink .logo img {
   height: 40px;
+}
+
+/* Empty element to balance the menu button */
+.header-balance {
+  width: auto;
 }
 
 /* Sidebar Menu */
@@ -91,7 +94,6 @@ body {
 .content {
   padding-top: 120px;
   padding-bottom: 120px;
-  margin-left: 250px;
   transition: margin-left 0.3s ease-in-out;
 }
 
@@ -201,30 +203,5 @@ h2 {
 
   .content {
     padding-top: 100px;
-    margin-left: 200px;
-  }
-
-  .logo img {
-    height: 50px;
-  }
-}
-
-/* Sidebar Toggle */
-function toggleSidebar() {
-  let sidebar = document.getElementById('sidebar');
-  let content = document.getElementById('content');
-  let header = document.getElementById('header');
-  let footer = document.getElementById('footer');
-
-  if (sidebar.style.left === '0px') {
-    sidebar.style.left = '-250px';
-    content.style.marginLeft = '0';
-    header.style.marginLeft = '0';
-    footer.style.marginLeft = '0';
-  } else {
-    sidebar.style.left = '0px';
-    content.style.marginLeft = '250px';
-    header.style.marginLeft = '250px';
-    footer.style.marginLeft = '250px';
   }
 }
