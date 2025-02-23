@@ -1,0 +1,16 @@
+{
+  "name": "Thssysnet Clock",
+  "short_name": "Clock",
+  "description": "Live clock displaying Hour:Minute:Seconds AM/PM",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#FF3131",
+  "theme_color": "#FF3131",
+  "icons": [
+    {
+      "src": "thssysnet.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}
