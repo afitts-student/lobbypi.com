@@ -10,6 +10,51 @@ body {
   transition: margin-left 0.3s ease-in-out;
 }
 
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #FF3131;
+  padding: 15px 20px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  z-index: 1000;
+  border-bottom: 3px solid white;
+  transition: background 0.3s, margin-left 0.3s ease-in-out;
+}
+
+.menu-btn {
+  font-size: 18px;
+  font-family: 'Instrument Serif', serif;
+  color: white;
+  background: transparent;
+  border: 2px solid white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu-btn:hover {
+  background-color: white;
+  color: #FF3131;
+}
+
+.logo {
+  justify-self: center;
+}
+
+.logo img {
+  height: 60px;
+  transition: height 0.3s;
+}
+
+.header.shrink .logo img {
+  height: 40px;
+}
+
 /* Search Bar */
 .search-bar {
   width: 100%;
@@ -19,7 +64,14 @@ body {
   font-family: 'Instrument Sans', sans-serif;
 }
 
-/* Audio Player */
+.audio-library {
+  margin: 20px 0;
+}
+
+.audio-item {
+  margin: 10px 0;
+}
+
 .audio-player {
   margin-top: 20px;
 }
