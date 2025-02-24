@@ -10,7 +10,6 @@ body {
   transition: margin-left 0.3s ease-in-out;
 }
 
-/* Header */
 .header {
   position: fixed;
   top: 0;
@@ -56,152 +55,51 @@ body {
   height: 40px;
 }
 
-/* Empty element to balance the menu button */
-.header-balance {
-  width: auto;
-}
-
-/* Sidebar Menu */
-.sidebar {
-  position: fixed;
-  left: -250px;
-  top: 0;
-  width: 250px;
-  height: 100%;
-  background: #FF3131;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  transition: left 0.3s;
-  text-align: center;
-  padding-top: 70px;
-  z-index: 1100;
-}
-
-.sidebar a {
-  display: block;
-  padding: 20px;
-  text-decoration: none;
-  color: white;
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  padding: 10px;
   font-size: 18px;
-  border-bottom: 1px solid white;
-}
-
-.sidebar a:hover {
-  background: white;
-  color: #FF3131;
-}
-
-/* Content */
-.content {
-  padding-top: 120px;
-  padding-bottom: 120px;
-  transition: margin-left 0.3s ease-in-out;
-}
-
-h1 {
-  font-family: 'Instrument Serif', serif;
-  font-size: 125px;
-  font-weight: normal;
-  color: white;
-  margin-bottom: 10px;
-}
-
-h2 {
-  font-family: 'Instrument Serif', serif;
-  font-size: 75px;
-  font-weight: normal;
-  color: white;
-  margin-bottom: 10px;
-}
-
-.intro-text {
-  font-size: 20px;
-  font-style: italic;
   margin-bottom: 20px;
+  font-family: 'Instrument Sans', sans-serif;
 }
 
-/* Button Styling */
-.button {
-  padding: 12px 24px;
-  font-size: 20px;
-  font-family: 'Instrument Serif', serif;
+.audio-library {
+  margin: 20px 0;
+}
+
+.audio-item {
+  margin: 10px 0;
+}
+
+.audio-player {
+  margin-top: 20px;
+}
+
+.player-controls button {
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 0 5px;
+  background-color: #FF3131;
   color: white;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 8px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease-in-out;
 }
 
-.button:hover {
+.player-controls button:hover {
   background-color: white;
   color: #FF3131;
 }
 
-/* Footer */
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: #FF3131;
-  padding: 15px 20px;
-  z-index: 900;
-  border-top: 3px solid white;
-  transition: background 0.3s, margin-left 0.3s ease-in-out;
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.footer-content p {
-  margin: 0;
-  font-size: 16px;
-  color: white;
-}
-
-.footer-links {
-  display: flex;
-  gap: 15px;
-  margin-top: 5px;
-}
-
-.footer a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer a:hover {
-  color: black;
-}
-
 /* Responsive Design */
 @media screen and (max-width: 768px) {
-  h1 {
-    font-size: 50px;
-  }
-
-  .intro-text {
+  .search-bar {
     font-size: 16px;
   }
 
-  .button {
-    font-size: 18px;
-    padding: 10px 20px;
-  }
-
-  .sidebar {
-    width: 200px;
-  }
-
-  .content {
-    padding-top: 100px;
+  .player-controls button {
+    padding: 8px 16px;
+    font-size: 16px;
   }
 }
