@@ -1,1 +1,54 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thssysnet Audio Library</title>
+  <link rel="icon" href="thssysnet.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <button class="menu-btn" onclick="toggleSidebar()">Menu</button>
+    <div class="logo">
+      <a href="index.html">
+        <img src="thssysnet-logo.png" alt="Thssysnet Logo">
+      </a>
+    </div>
+    <div class="header-balance"></div>
+  </header>
+
+  <div class="content" id="content">
+    <h1>Audio Library</h1>
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search for audio files..." oninput="filterAudioFiles()">
+
+    <div id="audioLibrary">
+      <!-- Audio files will be listed here -->
+    </div>
+
+    <div id="audioPlayer" class="audio-player">
+      <audio id="audioElement" controls>
+        Your browser does not support the audio element.
+      </audio>
+      <div class="player-controls">
+        <button onclick="skipAudio(-5)">-5s</button>
+        <button onclick="skipAudio(5)">+5s</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer" id="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Thssysnet. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
