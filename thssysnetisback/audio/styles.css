@@ -1,0 +1,53 @@
+/* General Page Styles */
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: #FF3131;
+  background-size: cover;
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+
+/* Audio Player */
+.audio-player {
+  margin-top: 20px;
+}
+
+.player-controls button {
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 0 5px;
+  background-color: #FF3131;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.player-controls button:hover {
+  background-color: white;
+  color: #FF3131;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .search-bar {
+    font-size: 16px;
+  }
+
+  .player-controls button {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
+}
