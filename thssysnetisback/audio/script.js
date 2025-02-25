@@ -2,7 +2,7 @@
 const audioFiles = [
   { name: "Track 1", src: "./track1.mp3" },
   { name: "Effect", src: "./effect.wav" },
-  // Add your .mp3/.wav files here (e.g., { name: "Cool Beat", src: "./cool-beat.mp3" })
+  // Add your .mp3/.wav files here
 ];
 
 // Format time (e.g., 0:45)
@@ -20,12 +20,13 @@ function createAudioItem(file) {
     <h2>${file.name}</h2>
     <div class="audio-player">
       <div class="audio-controls">
-        <button class="audio-btn play-btn">Play</button>
-        <button class="audio-btn rewind-btn">-5s</button>
-        <button class="audio-btn forward-btn">+5s</button>
+        <button class="audio-btn play-btn">▶</button>
+        <button class="audio-btn rewind-btn">⏪</button>
+        <button class="audio-btn forward-btn">⏩</button>
       </div>
       <div class="scrub-island">
         <div class="progress-container">
+          <div class="progress-symbols">⋮⋮⋮⋮⋮</div>
           <div class="progress-bar"><span class="progress-handle"></span></div>
         </div>
         <span class="time-display">0:00 / 0:00</span>
@@ -46,10 +47,10 @@ function createAudioItem(file) {
   playBtn.addEventListener('click', () => {
     if (audio.paused) {
       audio.play();
-      playBtn.textContent = 'Pause';
+      playBtn.textContent = '⏸';
     } else {
       audio.pause();
-      playBtn.textContent = 'Play';
+      playBtn.textContent = '▶';
     }
   });
 
@@ -98,7 +99,7 @@ function createAudioItem(file) {
   }
 
   audio.addEventListener('ended', () => {
-    playBtn.textContent = 'Play';
+    playBtn.textContent = '▶';
     progressBar.style.width = '0%';
   });
 
