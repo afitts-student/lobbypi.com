@@ -1,6 +1,6 @@
 // Your audio files go here—update with your actual files in /audio/
 const audioFiles = [
-  { name: "Track 1", src: "./track1.mp3" },
+  { name: "Badussy", src: "./badussy.mp3" },
   { name: "Effect", src: "./effect.wav" },
   // Example: { name: "Cool Beat", src: "./cool-beat.mp3" },
   // Add more as you drop files in /audio/
