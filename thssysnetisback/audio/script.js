@@ -1,76 +1,79 @@
-// List your audio filenames here—update this when you add new files
-const audioFileNames = [
-  "badussy.mp3",
-  "chill-vibe.wav",
-  // Add new filenames here as you upload them
+// Audio files list (update this manually with your files)
+const audioFiles = [
+  { name: "Track 1", src: "./track1.mp3" },
+  { name: "Effect", src: "./effect.wav" },
+  // Add your .mp3/.wav files here (e.g., { name: "Cool Beat", src: "./cool-beat.mp3" })
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Elements
-  const audioList = document.getElementById('audio-list');
-  const audioPlayer = document.getElementById('audio-player');
-  const playBtn = audioPlayer.querySelector('.play-btn');
-  const rewindBtn = audioPlayer.querySelector('.rewind-btn');
-  const forwardBtn = audioPlayer.querySelector('.forward-btn');
-  const progressContainer = audioPlayer.querySelector('.progress-container');
-  const progressBar = audioPlayer.querySelector('.progress-bar');
-  const progressThumb = audioPlayer.querySelector('.progress-thumb');
-  const timeDisplay = audioPlayer.querySelector('.time-display');
+// Format time (e.g., 0:45)
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs < 10 ? '0' + secs : secs}`;
+}
 
-  let currentAudio = new Audio();
-  let isDragging = false;
+// Create audio item
+function createAudioItem(file) {
+  const item = document.createElement('div');
+  item.className = 'audio-item';
+  item.innerHTML = `
+    <h2>${file.name}</h2>
+    <div class="audio-player">
+      <div class="audio-controls">
+        <button class="audio-btn play-btn">Play</button>
+        <button class="audio-btn rewind-btn">-5s</button>
+        <button class="audio-btn forward-btn">+5s</button>
+      </div>
+      <div class="scrub-island">
+        <div class="progress-container">
+          <div class="progress-bar"><span class="progress-handle"></span></div>
+        </div>
+        <span class="time-display">0:00 / 0:00</span>
+      </div>
+    </div>
+  `;
 
-  // Format time
-  function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs < 10 ? '0' + secs : secs}`;
-  }
+  const audio = new Audio(file.src);
+  const playBtn = item.querySelector('.play-btn');
+  const rewindBtn = item.querySelector('.rewind-btn');
+  const forwardBtn = item.querySelector('.forward-btn');
+  const progressContainer = item.querySelector('.progress-container');
+  const progressBar = item.querySelector('.progress-bar');
+  const progressHandle = item.querySelector('.progress-handle');
+  const timeDisplay = item.querySelector('.time-display');
 
-  // Update player
-  function updatePlayer() {
-    currentAudio.addEventListener('timeupdate', () => {
-      if (!isDragging) {
-        const progress = (currentAudio.currentTime / currentAudio.duration) * 100;
-        progressBar.style.width = `${progress}%`;
-        progressThumb.style.left = `${progress}%`;
-        timeDisplay.textContent = `${formatTime(currentAudio.currentTime)} / ${formatTime(currentAudio.duration || 0)}`;
-      }
-    });
-
-    currentAudio.addEventListener('ended', () => {
-      playBtn.textContent = 'Play';
-      progressBar.style.width = '0%';
-      progressThumb.style.left = '0%';
-    });
-  }
-
-  // Player controls
+  // Play/Pause
   playBtn.addEventListener('click', () => {
-    if (currentAudio.src) {
-      if (currentAudio.paused) {
-        currentAudio.play();
-        playBtn.textContent = 'Pause';
-      } else {
-        currentAudio.pause();
-        playBtn.textContent = 'Play';
-      }
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = 'Pause';
+    } else {
+      audio.pause();
+      playBtn.textContent = 'Play';
     }
   });
 
+  // Rewind/Forward
   rewindBtn.addEventListener('click', () => {
-    currentAudio.currentTime = Math.max(0, currentAudio.currentTime - 5);
+    audio.currentTime = Math.max(0, audio.currentTime - 5);
   });
 
   forwardBtn.addEventListener('click', () => {
-    currentAudio.currentTime = Math.min(currentAudio.duration, currentAudio.currentTime + 5);
+    audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
   });
 
+  // Progress Update
+  audio.addEventListener('timeupdate', () => {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = `${progress}%`;
+    timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration || 0)}`;
+  });
+
+  // Scrubbing
+  let isDragging = false;
   progressContainer.addEventListener('mousedown', (e) => {
-    if (currentAudio.src) {
-      isDragging = true;
-      updateProgress(e);
-    }
+    isDragging = true;
+    updateProgress(e);
   });
 
   document.addEventListener('mousemove', (e) => {
@@ -81,67 +84,76 @@ document.addEventListener('DOMContentLoaded', () => {
     isDragging = false;
   });
 
+  progressHandle.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    e.preventDefault();
+  });
+
   function updateProgress(e) {
+    if (!isDragging) return;
     const rect = progressContainer.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const width = rect.width;
-    currentAudio.currentTime = (clickX / width) * currentAudio.duration;
+    const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    const progress = clickX / rect.width;
+    audio.currentTime = progress * audio.duration;
   }
 
-  // Load audio files as clickable links
-  function loadAudioFiles() {
-    audioList.innerHTML = '';
-    audioFileNames.forEach(filename => {
-      const item = document.createElement('div');
-      item.className = 'audio-item';
-      const link = document.createElement('a');
-      link.href = '#';
-      link.textContent = filename.replace(/\.(mp3|wav)$/, '');
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        currentAudio.pause();
-        currentAudio = new Audio(`./${filename}`);
-        updatePlayer();
-        currentAudio.play();
-        playBtn.textContent = 'Pause';
-      });
-      item.appendChild(link);
-      audioList.appendChild(item);
-    });
-  }
-
-  loadAudioFiles();
-
-  // Sidebar toggle
-  const menuBtn = document.getElementById('menu-btn');
-  menuBtn.addEventListener('click', () => {
-    const sidebar = document.getElementById('sidebar');
-    const content = document.getElementById('content');
-    const header = document.getElementById('header');
-    const footer = document.getElementById('footer');
-    if (sidebar.style.left === '0px') {
-      sidebar.style.left = '-250px';
-      content.style.marginLeft = '0';
-      header.style.marginLeft = '0';
-      footer.style.marginLeft = '0';
-    } else {
-      sidebar.style.left = '0px';
-      content.style.marginLeft = '250px';
-      header.style.marginLeft = '250px';
-      footer.style.marginLeft = '250px';
-    }
+  audio.addEventListener('ended', () => {
+    playBtn.textContent = 'Play';
+    progressBar.style.width = '0%';
   });
 
-  // Header/footer scroll
-  window.addEventListener('scroll', () => {
-    const header = document.getElementById('header');
-    const footer = document.getElementById('footer');
-    if (window.scrollY > 50) {
-      header.classList.add('shrink');
-      footer.classList.add('shrink');
-    } else {
-      header.classList.remove('shrink');
-      footer.classList.remove('shrink');
-    }
-  });
+  return item;
+}
+
+// Load audio files
+const audioList = document.getElementById('audio-list');
+const searchBar = document.getElementById('audio-search');
+
+function loadAudioFiles() {
+  audioList.innerHTML = '';
+  audioFiles.forEach(file => audioList.appendChild(createAudioItem(file)));
+}
+
+// Search functionality
+searchBar.addEventListener('input', () => {
+  const query = searchBar.value.toLowerCase();
+  audioList.innerHTML = '';
+  audioFiles
+    .filter(file => file.name.toLowerCase().includes(query))
+    .forEach(file => audioList.appendChild(createAudioItem(file)));
 });
+
+// Initial load
+loadAudioFiles();
+
+// Header/footer scroll
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('header');
+  const footer = document.getElementById('footer');
+  if (window.scrollY > 50) {
+    header.classList.add('shrink');
+    footer.classList.add('shrink');
+  } else {
+    header.classList.remove('shrink');
+    footer.classList.remove('shrink');
+  }
+});
+
+// Sidebar toggle
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('content');
+  const header = document.getElementById('header');
+  const footer = document.getElementById('footer');
+  if (sidebar.style.left === '0px' || sidebar.style.left === '') {
+    sidebar.style.left = '-250px';
+    content.style.marginLeft = '0';
+    header.style.marginLeft = '0';
+    footer.style.marginLeft = '0';
+  } else {
+    sidebar.style.left = '0px';
+    content.style.marginLeft = '250px';
+    header.style.marginLeft = '250px';
+    footer.style.marginLeft = '250px';
+  }
+}
