@@ -25,8 +25,17 @@
   </header>
   <div class="content" id="content">
     <h1>THSSYSNET AUDIO LIBRARY</h1>
-    <p class="intro-text">Dive into our ever-growing audio collection.</p>
-    <input type="text" id="audio-search" class="search-bar" placeholder="Search Audio..." aria-label="Search Audio Library">
+    <p class="intro-text">Click any track to listen.</p>
+    <div class="audio-player" id="audio-player">
+      <button class="audio-btn play-btn">Play</button>
+      <button class="audio-btn rewind-btn">-5s</button>
+      <button class="audio-btn forward-btn">+5s</button>
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+        <div class="progress-thumb"></div>
+      </div>
+      <span class="time-display">0:00 / 0:00</span>
+    </div>
     <div class="audio-list" id="audio-list"></div>
   </div>
   <footer class="footer" id="footer">
