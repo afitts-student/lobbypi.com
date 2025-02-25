@@ -1,4 +1,4 @@
-/* Search Bar */
+/* Search Bar - Unique Design */
 .search-bar {
   width: 80%;
   max-width: 600px;
@@ -6,12 +6,12 @@
   font-size: 24px;
   font-family: 'Instrument Serif', serif;
   color: white;
-  background-color: transparent;
-  border: 4px solid white;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 3px solid white;
   border-radius: 12px;
   margin: 30px auto;
   display: block;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
 }
 
@@ -19,7 +19,7 @@
   outline: none;
   background-color: white;
   color: #FF3131;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Audio List */
@@ -30,35 +30,54 @@
 }
 
 .audio-item {
-  margin-bottom: 40px;
-  text-align: left;
+  margin-bottom: 50px;
+  text-align: center;
 }
 
 .audio-item h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 28px;
   font-family: 'Instrument Serif', serif;
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+.audio-item h2:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Custom Audio Player */
 .audio-player {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 15px;
-  background: transparent;
-  padding: 10px;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
   border: 2px solid white;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.audio-controls {
+  display: flex;
+  gap: 15px;
 }
 
 .audio-btn {
-  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  font-family: 'Instrument Serif', serif;
   color: white;
   background: transparent;
-  border: 1px solid white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  border: 2px solid white;
+  padding: 8px 16px;
+  border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
   transition: all 0.3s ease-in-out;
 }
 
@@ -67,12 +86,23 @@
   color: #FF3131;
 }
 
-.progress-container {
-  flex-grow: 1;
+/* Scrubbing Island */
+.scrub-island {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed white;
+  border-radius: 15px;
   position: relative;
-  height: 12px;
-  background: white;
-  border-radius: 6px;
+}
+
+.progress-container {
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5));
+  border-radius: 10px;
+  position: relative;
   cursor: pointer;
 }
 
@@ -80,27 +110,27 @@
   height: 100%;
   width: 0;
   background: #FF3131;
-  border-radius: 6px;
+  border-radius: 10px 0 0 10px;
+  position: relative;
+  overflow: visible;
 }
 
-.progress-thumb {
+.progress-handle {
   position: absolute;
-  top: -6px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  background: #FF3131;
-  border: 2px solid white;
+  top: -10px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  background: white;
+  border: 3px solid #FF3131;
   border-radius: 50%;
-  transform: translateX(-50%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   cursor: grab;
 }
 
-.progress-thumb:active {
-  cursor: grabbing;
-}
-
 .time-display {
-  font-size: 14px;
-  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  font-family: 'Instrument Serif', serif;
+  color: white;
+  margin-top: 10px;
 }
