@@ -1,4 +1,4 @@
-// Audio files list (update this manually with your files)
+// Audio files list (update this with your actual files)
 const audioFiles = [
   { name: "Track 1", src: "./track1.mp3" },
   { name: "Effect", src: "./effect.wav" },
