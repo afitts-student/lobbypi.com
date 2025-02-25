@@ -1,105 +1,23 @@
-/* General Page Styles */
-body {
-  font-family: 'Instrument Sans', sans-serif;
-  background: #FF3131;
-  background-size: cover;
-  color: white;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  transition: margin-left 0.3s ease-in-out;
-}
-
-.header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #FF3131;
-  padding: 15px 20px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  z-index: 1000;
-  border-bottom: 3px solid white;
-  transition: background 0.3s, margin-left 0.3s ease-in-out;
-}
-
-.menu-btn {
-  font-size: 18px;
+/* Search Bar */
+.search-bar {
+  width: 80%;
+  max-width: 600px;
+  padding: 12px 24px;
+  font-size: 20px;
   font-family: 'Instrument Serif', serif;
   color: white;
-  background: transparent;
+  background-color: transparent;
   border: 2px solid white;
-  padding: 10px 20px;
   border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
+  margin: 20px auto;
+  display: block;
   transition: all 0.3s ease-in-out;
 }
 
-.menu-btn:hover {
+.search-bar:focus {
+  outline: none;
   background-color: white;
   color: #FF3131;
 }
 
-.logo {
-  justify-self: center;
-}
-
-.logo img {
-  height: 60px;
-  transition: height 0.3s;
-}
-
-.header.shrink .logo img {
-  height: 40px;
-}
-
-/* Search Bar */
-.search-bar {
-  width: 100%;
-  padding: 10px;
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-family: 'Instrument Sans', sans-serif;
-}
-
-.audio-library {
-  margin: 20px 0;
-}
-
-.audio-item {
-  margin: 10px 0;
-}
-
-.audio-player {
-  margin-top: 20px;
-}
-
-.player-controls button {
-  padding: 10px 20px;
-  font-size: 18px;
-  margin: 0 5px;
-  background-color: #FF3131;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.player-controls button:hover {
-  background-color: white;
-  color: #FF3131;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-  .search-bar {
-    font-size: 16px;
-  }
-
-  .player-controls button {
-    padding: 8px 16px;
-    font-size: 16px;
-  }
-}
+/*​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
