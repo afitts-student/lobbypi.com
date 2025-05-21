@@ -70,8 +70,18 @@
     var currentDay = daysOfWeek[new Date().getDay()];
 
     // Function to get the current period based on time
-    function getCurrentPeriod() {
-      var currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+    async function getCurrentPeriod() {
+    try {
+        const response = await fetch('https://worldtimeapi.org/api/ip');
+        const data = await response.json();
+        const timeStr = new Date(data.datetime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        console.log("Server-based time:", timeStr);
+        return timeStr;
+    } catch (error) {
+        console.error("Error fetching time:", error);
+        return null;
+    }
+}
 
       // Rest of your code...
 
