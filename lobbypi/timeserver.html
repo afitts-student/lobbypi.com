@@ -65,41 +65,60 @@
   </div>
 
   <script>
-    async function fetchTimeAndUpdate() {
-      try {
-        const response = await fetch("https://worldtimeapi.org/api/timezone/America/New_York");
-        const data = await response.json();
-        const currentTime = new Date(data.datetime);
+    // Base time from the server (Eastern Time)
+    let baseTime = null;
+    let timeOffset = 0;
 
-        updateClock(currentTime);
-        updateDayPeriod(currentTime);
-      } catch (error) {
-        console.error("Failed to fetch time:", error);
+    async function initializeTime() {
+      try {
+        const res = await fetch("https://worldtimeapi.org/api/timezone/America/New_York");
+        const data = await res.json();
+        baseTime = new Date(data.datetime);
+        timeOffset = Date.now() - baseTime.getTime();
+      } catch (e) {
+        console.error("Could not load accurate time. Falling back to device time.", e);
+        baseTime = new Date();
+        timeOffset = 0;
       }
+      updateTime(); // Show clock immediately
+      setInterval(updateTime, 1000); // Update every second
+      updateSchedule(); // Show period
     }
 
-    function updateClock(currentTime) {
-      let hours = currentTime.getHours();
-      let minutes = currentTime.getMinutes();
-      let seconds = currentTime.getSeconds();
-      const clock = document.getElementById("clock");
+    function updateTime() {
+      const now = new Date(Date.now() - timeOffset);
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
 
       hours = hours % 12 || 12;
       minutes = padZero(minutes);
       seconds = padZero(seconds);
 
-      clock.innerHTML = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('clock').innerHTML = `${hours}:${minutes}:${seconds}`;
     }
 
     function padZero(num) {
       return (num < 10 ? '0' : '') + num;
     }
 
-    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    function updateSchedule() {
+      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      const now = new Date(Date.now() - timeOffset);
+      const currentDay = daysOfWeek[now.getDay()];
+      const currentPeriod = getCurrentPeriod(now);
 
-    function getCurrentPeriod(currentTime) {
-      const hours = currentTime.getHours();
-      const minutes = currentTime.getMinutes();
+      if (currentPeriod) {
+        document.getElementById("day-period").innerHTML = currentDay + " | " + currentPeriod;
+      } else {
+        document.getElementById("day-period").innerHTML = currentDay;
+      }
+    }
+
+    function getCurrentPeriod(now) {
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
       const formattedTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
 
       const schedule = [
@@ -131,17 +150,9 @@
       return null;
     }
 
-    function updateDayPeriod(currentTime) {
-      const currentDay = daysOfWeek[currentTime.getDay()];
-      const currentPeriod = getCurrentPeriod(currentTime);
-      const display = currentPeriod ? `${currentDay} | ${currentPeriod}` : currentDay;
-      document.getElementById("day-period").innerHTML = display;
-    }
-
-    // Initial call and regular updates
-    fetchTimeAndUpdate();
-    setInterval(fetchTimeAndUpdate, 10000); // Update every 10 seconds
+    initializeTime();
   </script>
+
 </body>
 
 </html>
