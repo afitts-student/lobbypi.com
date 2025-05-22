@@ -3,9 +3,12 @@ div {
 }
 
 h1 {
-  text-shadow: 7px 7px #800020;
+  text-shadow: 7px 7px 7px #f7bf14;
 }
-  
+#clock  {
+  text-shadow: 7px 7px #f7bf14;
+}
+
 font-family: 'Karla', sans-serif;
 font-family: 'Lilita One', cursive;
 
@@ -15,10 +18,7 @@ body, html {
   padding: 0;
 }
 
-/* Your original CSS code */
-body {
-  background-image: url('ths.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+#schedule {
+  font-family: Lilita One, cursive;
+  text-shadow: 7px 7px #800020
 }
