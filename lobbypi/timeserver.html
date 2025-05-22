@@ -66,35 +66,27 @@
   </div>
 
   <script>
-    // Global variables for server time
-    var serverTime = null;
-    var serverTimeOffset = 0;
-    var lastUpdateTime = 0;
-
-    // Function to fetch time from server
-    async function fetchServerTime() {
-      try {
-        const response = await fetch('https://worldtimeapi.org/api/timezone/America/New_York');
-        const data = await response.json();
-        serverTime = new Date(data.datetime);
-        lastUpdateTime = Date.now();
-        return serverTime;
-      } catch (error) {
-        console.error('Error fetching server time:', error);
-        // Fallback to local time if server fails
-        return new Date();
-      }
-    }
-
-    // Function to get current server time (interpolated)
-    function getCurrentServerTime() {
-      if (serverTime) {
-        const elapsed = Date.now() - lastUpdateTime;
-        return new Date(serverTime.getTime() + elapsed);
-      }
-      return new Date(); // Fallback
-    }
-
+        function updateClock() {
+            const now = new Date();
+            
+            // Convert to Pacific Time
+            const pacificTime = new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+            
+            // Format time
+            const timeString = pacificTime.toLocaleTimeString('en-US', {
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            // Format date
+            const dateString = pacificTime.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
     // JavaScript code to get the current day and period
     var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     
