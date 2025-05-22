@@ -65,13 +65,19 @@
   </div>
 
   <script>
+    // Function to get Pacific Time using the same approach as your working clock
+    function getPacificTime() {
+      const now = new Date();
+      return new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+    }
+
     // JavaScript code to get the current day and period
     var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var currentDay = daysOfWeek[new Date().getDay()];
+    var currentDay = daysOfWeek[getPacificTime().getDay()];
 
     // Function to get the current period based on time
     function getCurrentPeriod() {
-      var currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+      var currentTime = getPacificTime().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
 
       // Rest of your code...
 
@@ -89,7 +95,7 @@
   <script>
     function updateTime() {
       var clock = document.getElementById('clock');
-      var currentTime = new Date();
+      var currentTime = getPacificTime();
       var hours = currentTime.getHours();
       var minutes = currentTime.getMinutes();
       var seconds = currentTime.getSeconds();
@@ -120,11 +126,11 @@
   <script>
     // JavaScript code to get the current day and period
     var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var currentDay = daysOfWeek[new Date().getDay()];
+    var currentDay = daysOfWeek[getPacificTime().getDay()];
 
     // Function to get the current period based on time
     function getCurrentPeriod() {
-      var currentTime = new Date();
+      var currentTime = getPacificTime();
       var hours = currentTime.getHours();
       var minutes = currentTime.getMinutes();
       var formattedTime = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
