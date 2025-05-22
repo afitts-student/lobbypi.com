@@ -8,7 +8,7 @@
   <title>4thFloorPi Time</title>
   <style>
     body {
-      background-image: url('thsstudents.png');
+      background-image: url('/lobbypi/newwebsitebackground.png');
       background-size: cover;
       margin: 0;
       padding: 0;
@@ -20,42 +20,44 @@
     }
 
     h1 {
-      font-family: 'Anton', serif;
-      font-weight: 600;
+      font-family: 'DM Serif Text', serif;
+      font-weight: 450;
       font-size: 100px;
-      color: #f7bf14;
+      color: #FFFFFF;
       margin-top: 50px;
+      text-shadow: 7px 7px #f7bf14
     }
 
     #clock {
-      font-family: 'REM', sans-serif;
+      font-family: 'Bowlby One', sans-serif;
       font-size: 300px;
       text-align: center;
       color: #800020;
+      text-shadow: 7px 7px #f7bf14;
       margin-top: 50px;
     }
 
     #schedule {
-      font-family: 'Lilita One', sans-serif;
+      font-family: 'Bebas Neue', sans-serif;
       font-size: 100px;
       text-align: center;
-      color: white;
+      color: #f7bf14;
       margin-top: 95px;
     }
   </style>
-  <link rel="shortcut icon" href="lobbypibythssysnet.png" />
+  <link rel="shortcut icon" href="lobbypi.png" />
   <link rel="manifest" href="tmanifest.json">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=Karla:wght@900&family=Lilita+One&family=REM:wght@550&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Bebas+Neue&family=DM+Serif+Text&display=swap"
     rel="stylesheet">
 </head>
 
 <body>
-  <img src="thslogo.png" alt="THS Logo"
-    style="position: absolute; top: 55px; right: 30px; width: 200px; height: 200px;">
+  <img src="thslogoBW.png" alt="THS Logo"
+    style="position: absolute; bottom: 55px; right: 30px; width: 200px; height: 200px;">
   <center>
-    <h1>The Hudson School</h1>
+    <h1>The Hudson School Time</h1>
   </center>
   <div id="clock"></div>
   <div id="schedule">
@@ -101,7 +103,7 @@
       seconds = padZero(seconds);
 
       // Update the clock display
-      clock.innerHTML = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+      clock.innerHTML = hours + ':' + minutes + ':' + seconds;// + ' ' + ampm;
     }
 
     function padZero(num) {
