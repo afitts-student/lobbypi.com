@@ -1,0 +1,21 @@
+{
+  "messages": [
+    {
+      "id": "1734567890123",
+      "author": "Principal Johnson",
+      "content": "Welcome back students! Remember that the winter formal is this Friday. Tickets are still available at the main office.",
+      "timestamp": "2024-12-18T10:30:00.000Z",
+      "expiry": "2024-12-25T10:30:00.000Z",
+      "duration": 7
+    },
+    {
+      "id": "1734567890124",
+      "author": "Ms. Rodriguez",
+      "content": "Drama Club auditions for the spring play will be held next Tuesday after school in the auditorium. No experience necessary!",
+      "timestamp": "2024-12-18T14:15:00.000Z",
+      "expiry": "2024-12-22T14:15:00.000Z",
+      "duration": 4
+    }
+  ],
+  "lastUpdated": "2024-12-18T14:15:00.000Z"
+}
