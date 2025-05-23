@@ -1,78 +1,485 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LobbyPi Clubs & Slides Directory</title>
-  <link rel="icon" type="image/x-icon" href="lobbypibythssysnet.png">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Calibri&amp;display=swap" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="lobbypi.png">
-  <link rel="manifest" href="manifest.json">
-  <style>
-    body {
-      font-family: 'Calibri', sans-serif;
-      margin: 0;
-      padding: 0;
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    h1 {
-      font-family: 'Teko', sans-serif;
-      font-weight: 500;
-      font-size: 36px;
-      text-align: center;
-      margin-top: 20px;
-    }
-    .container {
-      flex-grow: 1; /* Occupy remaining vertical space */
-      display: flex;
-      flex-direction: column;
-      align-items: center; /* Center content horizontally */
-    }
-    .content-box {
-      padding: 20px;
-      margin: 20px;
-      width: 100%; /* Occupy the full width of the container */
-      font-size: 48px; /* Increase font size */
-      list-style-type: disc; /* Use bullet points */
-      text-align: center; /* Center text */
-    }
-    .content-box li {
-      margin-bottom: 20px; /* Add spacing between list items */
-    }
-    header {
-      background-color: #f2f2f2;
-      padding: 20px;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LobbyPi Clubs & Slides Directory</title>
+    <link rel="icon" type="image/x-icon" href="lobbypi.png">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --maroon: #800020;
+            --gold: #f7bf14;
+            --dark-maroon: #5a0016;
+            --light-gold: #ffd740;
+            --text-dark: #2c2c2c;
+            --text-light: #666;
+            --bg-light: #fafafa;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(128, 0, 32, 0.1);
+            --shadow-hover: 0 15px 40px rgba(128, 0, 32, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #fff 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--maroon) 0%, var(--dark-maroon) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(247,191,20,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(247,191,20,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(247,191,20,0.05)"/><circle cx="20" cy="80" r="0.5" fill="rgba(247,191,20,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .nav-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .nav-back a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-back a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: -30px auto 0;
+            padding: 0 20px 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Section Cards */
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(247, 191, 20, 0.1);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .section-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: var(--maroon);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--light-gold));
+            border-radius: 2px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--maroon);
+            font-weight: bold;
+        }
+
+        .clubs-icon {
+            background: linear-gradient(135deg, var(--gold), var(--light-gold));
+        }
+
+        .slides-icon {
+            background: linear-gradient(135deg, rgba(128, 0, 32, 0.1), rgba(247, 191, 20, 0.1));
+            border: 2px solid var(--gold);
+        }
+
+        .section-description {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        /* Content Lists */
+        .content-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .content-item {
+            position: relative;
+        }
+
+        .content-item a {
+            display: block;
+            padding: 16px 24px;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(247, 191, 20, 0.2);
+            background: linear-gradient(135deg, rgba(247, 191, 20, 0.02), rgba(128, 0, 32, 0.01));
+        }
+
+        .content-item a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(247, 191, 20, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .content-item a:hover::before {
+            left: 100%;
+        }
+
+        .content-item a:hover {
+            background: linear-gradient(135deg, rgba(128, 0, 32, 0.05), rgba(247, 191, 20, 0.1));
+            border-color: var(--gold);
+            transform: translateX(8px);
+            color: var(--maroon);
+            box-shadow: 0 6px 20px rgba(247, 191, 20, 0.2);
+        }
+
+        /* Special styling for different content types */
+        .clubs-list .content-item a {
+            border-left: 4px solid var(--gold);
+        }
+
+        .slides-list .content-item a {
+            border-left: 4px solid var(--maroon);
+        }
+
+        .clubs-list .content-item a:hover {
+            border-left-color: var(--maroon);
+        }
+
+        .slides-list .content-item a:hover {
+            border-left-color: var(--gold);
+        }
+
+        /* Stats Section */
+        .stats-bar {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            border: 1px solid rgba(247, 191, 20, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--maroon), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: -20px 10px 0;
+                padding: 0 10px 40px;
+            }
+
+            .section-card {
+                padding: 30px 25px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .nav-back {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 30px 15px;
+            }
+
+            .section-card {
+                padding: 25px 20px;
+                border-radius: 15px;
+            }
+
+            .content-item a {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .section-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        /* Accessibility */
+        .content-item a:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease 0.3s forwards;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>LobbyPi Clubs & Slides Directory:</h1>
-  </header>
-  <div class="container">
-    <ul class="content-box">
-      <li><a href="/clubs/btl.png">Between the Lines</a></li>
-      <li><a href="/clubs/cabaret.png.png">Cabaret</a></li>
-      <li><a href="/clubs/chess.png">Chess Club</a></li>
-      <li><a href="/clubs/gli.png">Girls Learn International</a></li>
-      <li><a href="/clubs/gsa.png">GSA</a></li>
-      <li><a href="/clubs/reading.png">Reading Club</a></li>
-      <li><a href="/clubs/cooking.png">Cooking Club</a></li>
-      <li><a href="/clubs/yearbook.png">Yearbook Club</a></li>
-      <hr>
-      <li><a href="/slides/assemblyadvisory.png">Assembly & Advisory Schedule</a></li>
-      <li><a href="/slides/contentsuggestions.jpeg">Got Content Suggestions?</a></li>
-      <li><a href="/slides/openhouse.jpg">Open House</a></li>
-      <li><a href="/slides/OH1.png">OH1</a></li>
-      <li><a href="/slides/OH2.png">OH2</a></li>
-      <li><a href="/slides/ruvna.png">Ruvna</a></li>
-      </ul>
-  </div>
+    <header>
+        <div class="nav-back">
+            <a href="../index.html">← Back to Home</a>
+        </div>
+        <h1>LobbyPi Clubs & Slides Directory</h1>
+        <div class="subtitle">Digital Content Management System</div>
+    </header>
+
+        <div class="section-grid">
+            <div class="section-card">
+                <h2 class="section-title">
+                    </span>
+                    Clubs
+                </h2>
+                <ul class="content-list clubs-list">
+                    <li class="content-item"><a href="/clubs/btl.png">Between the Lines</a></li>
+                    <li class="content-item"><a href="/clubs/cabaret.png.png">Cabaret</a></li>
+                    <li class="content-item"><a href="/clubs/chess.png">Chess Club</a></li>
+                    <li class="content-item"><a href="/clubs/gli.png">Girls Learn International</a></li>
+                    <li class="content-item"><a href="/clubs/gsa.png">GSA</a></li>
+                    <li class="content-item"><a href="/clubs/reading.png">Reading Club</a></li>
+                    <li class="content-item"><a href="/clubs/cooking.png">Cooking Club</a></li>
+                    <li class="content-item"><a href="/clubs/yearbook.png">Yearbook Club</a></li>
+                </ul>
+            </div>
+
+            <div class="section-card">
+                <h2 class="section-title">
+                    </span>
+                    Slides
+                </h2>
+                <ul class="content-list slides-list">
+                    <li class="content-item"><a href="/slides/assemblyadvisory.png">Assembly & Advisory Schedule</a></li>
+                    <li class="content-item"><a href="/slides/contentsuggestions.jpeg">Got Content Suggestions?</a></li>
+                    <li class="content-item"><a href="/slides/openhouse.jpg">Open House</a></li>
+                    <li class="content-item"><a href="/slides/OH1.png">OH1</a></li>
+                    <li class="content-item"><a href="/slides/OH2.png">OH2</a></li>
+                    <li class="content-item"><a href="/slides/ruvna.png">Ruvna</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Stagger the animation of content items
+            const contentItems = document.querySelectorAll('.content-item');
+            contentItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = 'all 0.3s ease';
+                
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 500 + (index * 50));
+            });
+        });
+
+        // Enhanced hover effects
+        document.querySelectorAll('.content-item a').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.setProperty('--hover-intensity', '1.1');
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.setProperty('--hover-intensity', '1');
+            });
+        });
+
+        // Add keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.querySelectorAll('.content-item a:focus').forEach(link => {
+                    link.style.boxShadow = '0 0 0 3px rgba(247, 191, 20, 0.3)';
+                });
+            }
+        });
+
+        // Smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Performance optimization
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.loading').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Add click analytics (optional - for tracking usage)
+        document.querySelectorAll('.content-item a').forEach(link => {
+            link.addEventListener('click', function() {
+                // You can add analytics tracking here if needed
+                console.log('Clicked:', this.textContent, 'URL:', this.href);
+            });
+        });
+    </script>
 </body>
 </html>
