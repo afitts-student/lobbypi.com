@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hoboken Weather - Hourly</title>
+    <style>
+        /* Modern font styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Material+Icons');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('thsstudents.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .current-weather {
+            margin-bottom: 30px;
+        }
+
+        .current-weather h2 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        .current-weather p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        .current-weather .temp {
+            font-size: 72px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .hourly-weather {
+            margin-top: 20px;
+        }
+
+        .hourly-cards {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .hourly-card {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .hourly-card h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        .hourly-card p {
+            font-size: 18px;
+            margin: 5px 0;
+            color: black;
+        }
+
+        .weather-icon {
+            font-family: 'Material Icons';
+            font-size: 48px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Current Weather Section -->
+        <section class="current-weather">
+            <h2 id="city-name">Hoboken, NJ</h2>
+            <p id="weather-conditions">Conditions: --</p>
+            <div class="temp" id="temperature">--°F</div>
+        </section>
+
+        <!-- Hourly Weather Section -->
+        <section class="hourly-weather">
+            <div class="hourly-cards">
+                <div class="hourly-card">
+                    <h4 id="time1">Time</h4>
+                    <span class="weather-icon" id="icon1">☀</span>
+                    <p id="temp1">--°F</p>
+                    <p id="desc1">--</p>
+                </div>
+                <div class="hourly-card">
+                    <h4 id="time2">Time</h4>
+                    <span class="weather-icon" id="icon2">☁</span>
+                    <p id="temp2">--°F</p>
+                    <p id="desc2">--</p>
+                </div>
+                <div class="hourly-card">
+                    <h4 id="time3">Time</h4>
+                    <span class="weather-icon" id="icon3">🌧</span>
+                    <p id="temp3">--°F</p>
+                    <p id="desc3">--</p>
+                </div>
+                <div class="hourly-card">
+                    <h4 id="time4">Time</h4>
+                    <span class="weather-icon" id="icon4">❄</span>
+                    <p id="temp4">--°F</p>
+                    <p id="desc4">--</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Your OpenWeatherMap API key (replace 'YOUR_API_KEY' with your actual API key)
+        const apiKey = '9f39a7dd8299cd146e3e2fc7d91850cb';
+        const cityId = '5099133'; // Hoboken, NJ city ID from OpenWeatherMap
+        const units = 'imperial'; // For Fahrenheit
+
+        // Fetch current weather for Hoboken, NJ
+        function fetchWeather() {
+            const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?id=${cityId}&appid=${apiKey}&units=${units}`;
+
+            fetch(weatherUrl)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperature').innerHTML = `${Math.round(data.main.temp)}°F`;
+                    document.getElementById('weather-conditions').innerHTML = `Conditions: ${data.weather[0].description}`;
+                })
+                .catch(error => console.log('Error fetching current weather data:', error));
+        }
+
+        // Fetch hourly forecast for Hoboken, NJ (in 3-hour intervals)
+        function fetchHourlyForecast() {
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?id=${cityId}&appid=${apiKey}&units=${units}`;
+
+            fetch(forecastUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // 3-hour intervals (4 time slots)
+                    const hourlyData = [0, 1, 2, 3];
+                    hourlyData.forEach((hour, index) => {
+                        const time = new Date(data.list[hour].dt_txt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        document.getElementById(`time${index + 1}`).innerHTML = time;
+                        document.getElementById(`temp${index + 1}`).innerHTML = `${Math.round(data.list[hour].main.temp)}°F`;
+                        document.getElementById(`desc${index + 1}`).innerHTML = data.list[hour].weather[0].description;
+
+                        // Set icon based on weather condition
+                        const weatherCode = data.list[hour].weather[0].icon;
+                        const iconElement = document.getElementById(`icon${index + 1}`);
+                        setWeatherIcon(weatherCode, iconElement);
+                    });
+                })
+                .catch(error => console.log('Error fetching hourly forecast:', error));
+        }
+
+        // Function to set weather icon based on OpenWeatherMap's icon code
+        function setWeatherIcon(code, element) {
+            const icons = {
+                "01d": "☀", // clear sky day
+                "01n": "🌙", // clear sky night
+                "02d": "⛅", // few clouds day
+                "02n": "🌙", // few clouds night
+                "03d": "☁", // scattered clouds
+                "03n": "☁", 
+                "04d": "☁", // broken clouds
+                "04n": "☁",
+                "09d": "🌧", // shower rain
+                "09n": "🌧",
+                "10d": "🌦", // rain day
+                "10n": "🌧", // rain night
+                "11d": "⛈", // thunderstorm
+                "11n": "⛈",
+                "13d": "❄", // snow
+                "13n": "❄",
+                "50d": "🌫", // mist
+                "50n": "🌫"
+            };
+            element.innerHTML = icons[code] || "☁"; // Default to cloudy
+        }
+
+        // Fetch both current weather and hourly forecast data
+        fetchWeather();
+        fetchHourlyForecast();
+    </script>
+
+</body>
+</html>

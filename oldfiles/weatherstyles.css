@@ -1,0 +1,48 @@
+div {
+   
+}
+
+h1 {
+      font-family: 'Anton', serif;
+      font-weight: 600;
+      font-size: 100px;
+      color: #f7bf14;
+      margin-top: 50px;
+      text-shadow: 7px 7px #800020;
+    }
+
+h2 {
+      font-family: 'REM', sans-serif;
+      font-size: 75px;
+      text-align: center;
+      color: #800020;
+      margin-top: 50px;
+      text-shadow: 2px 2px white;
+    }
+
+body {
+      font-family: 'REM', sans-serif;
+      font-size: 35px;
+      text-align: center;
+      color: white;
+      margin-top: 50px;
+      text-shadow: 2px 2px #f7bf14;
+    }
+  
+
+
+font-family: 'Karla', sans-serif;
+font-family: 'Lilita One', cursive;
+
+/* CSS Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+/* Your original CSS code */
+body {
+  background-image: url('thsbackground.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  }
